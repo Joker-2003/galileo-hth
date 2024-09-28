@@ -38,19 +38,48 @@ export default function WorkspacePage() {
   const sectionRefs = useRef({});
 
   const projects = [
-  {
-    title: "Quizzes",
-    description:
-      "Pre built quizzes to help you test your knowledge on various topics.",
-    link: `/dashboard/${workspaceid}/review/flashcards/456`,
-  },
-  {
-    title: "Flashcards",
-    description:
-      "Flashcards to help you memorize important concepts and terms.",
-    link: `/dashboard/${workspaceid}/review/flashcards/123`,
-  },
-];
+    {
+      title: "Quiz 1 - Introduction",
+      id : "123",
+      description:
+        "Pre built quizzes to help you test your knowledge on various topics.",
+      count : 10,
+     link: `/dashboard/${workspaceid}/review/quiz/${123}`,
+    },
+    {
+      title: "Quiz 2 - Advanced",
+      id : "456",
+      description:
+        "Quiz to help you memorize important concepts and terms.",
+        count : 10,
+      link: `/dashboard/${workspaceid}/review/quiz/${456}`,
+    },
+    {
+      title: "Quiz 2 - Advanced",
+      id : "456",
+      description:
+        "Quiz to help you memorize important concepts and terms.",
+        count : 10,
+      link: `/dashboard/${workspaceid}/review/quiz/${456}`,
+    },
+    {
+      title: "Quiz 2 - Advanced",
+      id : "456",
+      description:
+        "Quiz to help you memorize important concepts and terms.",
+        count : 10,
+      link: `/dashboard/${workspaceid}/review/quiz/${456}`,
+    },
+    {
+      title: "Quiz 2 - Advanced",
+      id : "456",
+      description:
+        "Quiz to help you memorize important concepts and terms.",
+        count : 10,
+      link: `/dashboard/${workspaceid}/review/flashcards/${456}`,
+    },
+  ];
+
 
   const handleNavigation = (topic) => {
     setActiveSection(topic);
@@ -104,18 +133,7 @@ export default function WorkspacePage() {
             </button>
           </div>
 
-
-
-          <div>
-            <div className="max-w-5xl mx-auto px-8">
-             <QuizCard text="Quiz Card" description="This is a quiz card" />
-            </div>
-			<div className="max-w-5xl mx-auto px-8">
-             <QuizCard text="Quiz Card" description="This is a quiz card" />
-            </div>
-          </div>
-
-
+          {/* Content */}
 
         </div>
       </div>

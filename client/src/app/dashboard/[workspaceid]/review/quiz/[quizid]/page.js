@@ -3,11 +3,32 @@ import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import WorkspaceNavbar from "@/components/built/workspacenavbar";
 import { ThemeProvider } from "@/components/context/themecontext";
-import { Bar } from "react-chartjs-2";
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
+import { Scatter } from "react-chartjs-2";
+import { Line } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  TimeScale,
+  LineElement,
+  PointElement,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import 'chartjs-adapter-date-fns'; // Import the date adapter
 
-// Register Chart.js components
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+// Register the necessary components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  TimeScale,
+  LineElement,
+  PointElement,
+  Tooltip,
+  Legend
+);
+
+
 
 export default function WorkspacePage() {
   const router = useRouter();
@@ -32,15 +53,15 @@ export default function WorkspacePage() {
         { id: "4", text: "President of Russia" },
       ],
       history: [{
-        correct : false,
+        correct: false,
         timestamp: "2022-10-10T12:00:00Z"
       },
       {
-        correct : false,
+        correct: false,
         timestamp: "2022-10-11T12:00:00Z"
       },
       {
-        correct : false,
+        correct: false,
         timestamp: "2022-10-12T12:00:00Z"
       }]
     },
@@ -54,15 +75,15 @@ export default function WorkspacePage() {
         { id: "4", text: "Angela Merkel" },
       ],
       history: [{
-        correct : true,
+        correct: true,
         timestamp: "2022-10-10T12:00:00Z"
       },
       {
-        correct : false,
+        correct: false,
         timestamp: "2022-10-11T12:00:00Z"
       },
       {
-        correct : true,
+        correct: true,
         timestamp: "2022-10-12T12:00:00Z"
       }]
 
@@ -77,30 +98,30 @@ export default function WorkspacePage() {
         { id: "4", text: "Rome" },
       ],
       history: [{
-        correct : false,
+        correct: false,
         timestamp: "2022-10-10T12:00:00Z"
       },
       {
-        correct : false,
+        correct: false,
         timestamp: "2022-10-11T12:00:00Z"
       },
       {
-        correct : true,
+        correct: true,
         timestamp: "2022-10-12T12:00:00Z"
       }]
     },
   ];
 
   const mockPreviousAttempts = [{
-    time : "2022-10-10T12:00:00Z",
+    timestamp: "2022-10-10T12:00:00Z",
     data: 3,
   },
   {
-    time : "2022-10-11T12:00:00Z",
+    timestamp: "2022-10-11T12:00:00Z",
     data: 2,
   },
   {
-    time : "2022-10-12T12:00:00Z",
+    timestamp: "2022-10-12T12:00:00Z",
     data: 0,
   },
   ]; // Mock data for previous scores
@@ -150,17 +171,70 @@ export default function WorkspacePage() {
 
   // Data for Bar Chart
   const chartData = {
-    labels: mockPreviousAttempts.map((attempt) => attempt.time.split("T")[0]),
     datasets: [
       {
-        label: "Previous Scores",
-        data: mockPreviousAttempts.map((attempt) => attempt.data),
+        label: 'Previous Attempts',
+        data: mockPreviousAttempts.map((attempt) => ({
+          x: new Date(attempt.timestamp), // Use the timestamp on the x-axis
+          y: attempt.data, // Use the score on the y-axis
+        })),
         backgroundColor: "rgba(54, 162, 235, 0.2)",
         borderColor: "rgba(54, 162, 235, 1)",
-        borderWidth: 1,
+        showLine: true,
+        tension: 0.3, // Smooth the line
       },
     ],
   };
+
+
+
+
+
+  const MultipleCharts = () => (
+    <div>
+      {questions.map((q, index) => (
+        <div key={q.id}>
+          <h3>{q.question}</h3>
+          <Line
+            data={{
+              datasets: [{
+                label: `Answers`,
+                data: q.history.map((attempt) => ({
+                  x: new Date(attempt.timestamp), // Use the timestamp on the x-axis
+                  y: attempt.correct ? 1 : 0, // Correct (1) or incorrect (0) on the y-axis
+                })),
+                backgroundColor: "rgba(54, 162, 235, 0.2)",
+                borderColor: "rgba(54, 162, 235, 1)",
+                showLine: true,
+                tension: 0.3, // Smooth the line
+              }],
+            }}
+            options={{
+              scales: {
+                x: {
+                  type: 'time', // Use time scale for x-axis
+                  time: {
+                    unit: 'day', // You can adjust the unit to your needs
+                  },
+                  title: {
+                    display: true,
+                    text: 'Timestamp',
+                  },
+                },
+                y: {
+                  beginAtZero: true,
+                  title: {
+                    display: true,
+                    text: 'Correct (1) / Incorrect (0)',
+                  },
+                },
+              },
+            }}
+          />
+        </div>
+      ))}
+    </div>
+  );
 
   return (
     <ThemeProvider>
@@ -251,7 +325,7 @@ export default function WorkspacePage() {
         </div>
 
         {/* Right: Sidebar */}
-        <div className="w-1/4 py-[64px] px-8 bg-gray-100 dark:bg-neutral-800">
+        <div className="w-1/4 py-[64px] px-8 bg-gray-100 dark:bg-neutral-800 overflow-y-auto">
           <h2 className="text-xl font-semibold mb-4">Quiz Progress</h2>
           <ul className="list-disc ml-4">
             {questions.map((q, index) => (
@@ -270,30 +344,42 @@ export default function WorkspacePage() {
 
           {/* Chart for Previous Attempts */}
           <div className="mt-8">
-            <h2 className="text-xl font-semibold mb-4">Previous Attempts</h2>
-            <Bar data={chartData} />
+            <h2 className="text-xl font-semibold mb-4">Your History</h2>
+       
+              {/* Scatter Plot */}
+              <Line data={chartData}
+                options={{
+                  scales: {
+                    x: {
+                      type: 'time', // Use time scale for x-axis
+                      time: {
+                        unit: 'day', // You can adjust the unit to your needs
+                      },
+                      title: {
+                        display: true,
+                        text: 'Timestamp',
+                      },
+                    },
+                    y: {
+                      beginAtZero: true,
+                      max: 3,
+                      title: {
+                        display: true,
+                        text: 'Score',
+                      },
+                    },
+                  },
+                }} />
+    
           </div>
 
-          {/* Quiz History */}
           <div className="mt-8">
-            <h2 className="text-xl font-semibold mb-4">Quiz History</h2>
-            <ul>
-              {questions.map((q, index) => (
-                <li key={q.id} className="mb-4">
-                  <h3 className="text-lg font-semibold mb-2">
-                    Question {index + 1}: {q.question}
-                  </h3>
-                  <ul>
-                    {q.history.map((h) => (
-                      <li key={h.timestamp} className="text-gray-600 dark:text-gray-400">
-                        {h.correct ? "Correct" : "Incorrect"} - {h.timestamp}
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-              ))}
-            </ul>
-            </div>
+            <h2 className="text-xl font-semibold mb-4 ">Question Wise History</h2>
+
+            {/* Chart for Previous Attempts different hcarts for different questions */}
+            <MultipleCharts />
+          </div>
+
         </div>
       </div>
     </ThemeProvider>

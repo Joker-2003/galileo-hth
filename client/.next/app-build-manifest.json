@@ -1,20 +1,15 @@
 {
   "pages": {
-    "/dashboard/[workspaceid]/review/quiz/page": [
+    "/dashboard/[workspaceid]/review/quiz/[quizid]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/dashboard/[workspaceid]/review/quiz/page.js"
+      "static/chunks/app/dashboard/[workspaceid]/review/quiz/[quizid]/page.js"
     ],
     "/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
-    ],
-    "/dashboard/[workspaceid]/review/quiz/[quizid]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/dashboard/[workspaceid]/review/quiz/[quizid]/page.js"
     ],
     "/dashboard/[workspaceid]/[topicid]/page": [
       "static/chunks/webpack.js",
@@ -26,15 +21,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/dashboard/[workspaceid]/review/page.js"
     ],
-    "/login/page": [
+    "/dashboard/[workspaceid]/review/quiz/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/login/page.js"
+      "static/chunks/app/dashboard/[workspaceid]/review/quiz/page.js"
     ],
-    "/signup/page": [
+    "/dashboard/[workspaceid]/review/flashcards/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/signup/page.js"
+      "static/chunks/app/dashboard/[workspaceid]/review/flashcards/page.js"
     ],
     "/_not-found/page": [
       "static/chunks/webpack.js",

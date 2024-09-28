@@ -1,8 +1,9 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
-  "/dashboard/[workspaceid]/review/quiz/page": "app/dashboard/[workspaceid]/review/quiz/page.js",
-  "/dashboard/[workspaceid]/review/quiz/[quizid]/page": "app/dashboard/[workspaceid]/review/quiz/[quizid]/page.js",
   "/dashboard/[workspaceid]/[topicid]/page": "app/dashboard/[workspaceid]/[topicid]/page.js",
-  "/signup/page": "app/signup/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js"
+  "/dashboard/[workspaceid]/review/flashcards/page": "app/dashboard/[workspaceid]/review/flashcards/page.js",
+  "/dashboard/[workspaceid]/review/quiz/page": "app/dashboard/[workspaceid]/review/quiz/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/dashboard/[workspaceid]/review/page": "app/dashboard/[workspaceid]/review/page.js",
+  "/dashboard/[workspaceid]/review/quiz/[quizid]/page": "app/dashboard/[workspaceid]/review/quiz/[quizid]/page.js"
 }
