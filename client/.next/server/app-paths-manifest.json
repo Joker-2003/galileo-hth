@@ -1,0 +1,5 @@
+{
+  "/dashboard/[workspaceid]/review/page": "app/dashboard/[workspaceid]/review/page.js",
+  "/dashboard/[workspaceid]/review/quiz/page": "app/dashboard/[workspaceid]/review/quiz/page.js",
+  "/dashboard/[workspaceid]/review/flashcards/page": "app/dashboard/[workspaceid]/review/flashcards/page.js"
+}
