@@ -1,4 +1,4 @@
-// File: /Users/kovidsrivart/workstuff/ibm-galileo/client-new/src/app/dashboard/[workspaceid]/review/quiz/[quizid]/page.js
+// File: /Users/kovidsrivart/workstuff/galileo-hth/client/src/app/dashboard/[workspaceid]/review/quiz/[quizid]/page.js
 import * as entry from '../../../../../../../../src/app/dashboard/[workspaceid]/review/quiz/[quizid]/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
