@@ -1,5 +1,0 @@
-{
-  "/_not-found/page": "app/_not-found/page.js",
-  "/dashboard/[workspaceid]/review/quiz/page": "app/dashboard/[workspaceid]/review/quiz/page.js",
-  "/dashboard/[workspaceid]/review/quiz/[quizid]/page": "app/dashboard/[workspaceid]/review/quiz/[quizid]/page.js"
-}
