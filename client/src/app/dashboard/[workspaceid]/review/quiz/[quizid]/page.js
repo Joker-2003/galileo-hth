@@ -3,6 +3,11 @@ import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import WorkspaceNavbar from "@/components/built/workspacenavbar";
 import { ThemeProvider } from "@/components/context/themecontext";
+import { Bar } from "react-chartjs-2";
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
+
+// Register Chart.js components
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 export default function WorkspacePage() {
   const router = useRouter();
@@ -11,11 +16,11 @@ export default function WorkspacePage() {
   const [activeTab, setActiveTab] = useState("review");
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [quizSubmitted, setQuizSubmitted] = useState(false);
-  const [feedback, setFeedback] = useState(null); // Mock feedback data
-  const [score, setScore] = useState(null); // Track quiz score
+  const [feedback, setFeedback] = useState(null);
+  const [score, setScore] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const quizTitle = "Quiz Title 1"  ;
+  const quizTitle = "Quiz Title 1";
   const questions = [
     {
       question: "Who is Joe Biden?",
@@ -26,6 +31,18 @@ export default function WorkspacePage() {
         { id: "3", text: "President of Mexico" },
         { id: "4", text: "President of Russia" },
       ],
+      history: [{
+        correct : false,
+        timestamp: "2022-10-10T12:00:00Z"
+      },
+      {
+        correct : false,
+        timestamp: "2022-10-11T12:00:00Z"
+      },
+      {
+        correct : false,
+        timestamp: "2022-10-12T12:00:00Z"
+      }]
     },
     {
       question: "Who is the Prime Minister of Canada?",
@@ -36,6 +53,19 @@ export default function WorkspacePage() {
         { id: "3", text: "Emmanuel Macron" },
         { id: "4", text: "Angela Merkel" },
       ],
+      history: [{
+        correct : true,
+        timestamp: "2022-10-10T12:00:00Z"
+      },
+      {
+        correct : false,
+        timestamp: "2022-10-11T12:00:00Z"
+      },
+      {
+        correct : true,
+        timestamp: "2022-10-12T12:00:00Z"
+      }]
+
     },
     {
       question: "Where is the Eiffel Tower located?",
@@ -46,8 +76,34 @@ export default function WorkspacePage() {
         { id: "3", text: "New York" },
         { id: "4", text: "Rome" },
       ],
+      history: [{
+        correct : false,
+        timestamp: "2022-10-10T12:00:00Z"
+      },
+      {
+        correct : false,
+        timestamp: "2022-10-11T12:00:00Z"
+      },
+      {
+        correct : true,
+        timestamp: "2022-10-12T12:00:00Z"
+      }]
     },
   ];
+
+  const mockPreviousAttempts = [{
+    time : "2022-10-10T12:00:00Z",
+    data: 3,
+  },
+  {
+    time : "2022-10-11T12:00:00Z",
+    data: 2,
+  },
+  {
+    time : "2022-10-12T12:00:00Z",
+    data: 0,
+  },
+  ]; // Mock data for previous scores
 
   const handleAnswerChange = (questionId, optionId) => {
     setSelectedAnswers({
@@ -65,7 +121,6 @@ export default function WorkspacePage() {
 
     setQuizSubmitted(true);
 
-    // Mock feedback (this would come from the backend)
     const mockFeedback = {
       "123": { correct: true, explanation: "Joe Biden is the President of the United States." },
       "124": { correct: true, explanation: "Justin Trudeau is the Prime Minister of Canada." },
@@ -74,7 +129,6 @@ export default function WorkspacePage() {
 
     setFeedback(mockFeedback);
 
-    // Calculate score
     const correctAnswersCount = Object.keys(mockFeedback).filter(
       (id) => mockFeedback[id].correct
     ).length;
@@ -92,6 +146,20 @@ export default function WorkspacePage() {
 
   const goToQuizzes = () => {
     router.push(`/dashboard/${workspaceid}/quizzes`);
+  };
+
+  // Data for Bar Chart
+  const chartData = {
+    labels: mockPreviousAttempts.map((attempt) => attempt.time.split("T")[0]),
+    datasets: [
+      {
+        label: "Previous Scores",
+        data: mockPreviousAttempts.map((attempt) => attempt.data),
+        backgroundColor: "rgba(54, 162, 235, 0.2)",
+        borderColor: "rgba(54, 162, 235, 1)",
+        borderWidth: 1,
+      },
+    ],
   };
 
   return (
@@ -145,7 +213,6 @@ export default function WorkspacePage() {
                   </div>
                 ))}
 
-                {/* Display feedback after submission */}
                 {quizSubmitted && feedback && feedback[q.id] && (
                   <div className="mt-4">
                     {feedback[q.id].correct ? (
@@ -158,10 +225,8 @@ export default function WorkspacePage() {
               </div>
             ))}
 
-            {/* Error Message */}
             {errorMessage && <p className="text-red-600 mb-4">{errorMessage}</p>}
 
-            {/* Submit Button */}
             {!quizSubmitted ? (
               <button
                 onClick={handleSubmitQuiz}
@@ -203,7 +268,32 @@ export default function WorkspacePage() {
             </p>
           </div>
 
-          
+          {/* Chart for Previous Attempts */}
+          <div className="mt-8">
+            <h2 className="text-xl font-semibold mb-4">Previous Attempts</h2>
+            <Bar data={chartData} />
+          </div>
+
+          {/* Quiz History */}
+          <div className="mt-8">
+            <h2 className="text-xl font-semibold mb-4">Quiz History</h2>
+            <ul>
+              {questions.map((q, index) => (
+                <li key={q.id} className="mb-4">
+                  <h3 className="text-lg font-semibold mb-2">
+                    Question {index + 1}: {q.question}
+                  </h3>
+                  <ul>
+                    {q.history.map((h) => (
+                      <li key={h.timestamp} className="text-gray-600 dark:text-gray-400">
+                        {h.correct ? "Correct" : "Incorrect"} - {h.timestamp}
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ul>
+            </div>
         </div>
       </div>
     </ThemeProvider>
