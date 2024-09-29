@@ -5,7 +5,7 @@ LOCALHOST = "http://0.0.0.0:8000"
 
 
 def create_user_if_not_exists(email: str = "thomaslin910608@gmail.com"):
-    response = requests.request("GET", f"{LOCALHOST}/user?email={email}")
+    response = requests.request("GET", f"{LOCALHOST}/user/email/{email}")
     if response.status_code == 404:
         payload = json.dumps({
             "email": "thomaslin910608@gmail.com",

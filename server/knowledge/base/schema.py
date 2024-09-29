@@ -63,8 +63,8 @@ class Document(BaseDocument):
         document = Document(
             text=SAMPLE_TEXT,
             metadata={
-                "original_filename": "sample.pdf",
-                "stored_filename": str(uuid.uuid4()),
+                "filename": "sample.pdf",
+                "key": str(uuid.uuid4()),
                 "content_type": "application/pdf",
                 "uploaded_at": datetime.utcnow()
             },

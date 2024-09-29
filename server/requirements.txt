@@ -11,6 +11,7 @@ google-api-python-client
 llama-index
 matplotlib
 pydantic-settings
+pymupdf
 pytest
 python-docx
 python-multipart
