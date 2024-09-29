@@ -17,7 +17,13 @@ from server.utils.pdf import load_pdf_text
 router = APIRouter(prefix="/workspace", tags=["workspace"])
 
 
-@router.get("/{workspace_id}", response_model=WorkspaceResponse)
+@router.get("/user/{user_id}", response_model=list[WorkspaceResponse])
+async def get_workspaces(user_id: PydanticObjectId):
+    workspaces = await Workspace.find_many(Workspace.user_id == user_id).to_list()
+    return [WorkspaceResponse.from_workspace(workspace) for workspace in workspaces]
+
+
+@router.get("/workspace/{workspace_id}", response_model=WorkspaceResponse)
 async def get_workspace(workspace_id: PydanticObjectId):
     workspace = await Workspace.get(workspace_id)
     if not workspace:
