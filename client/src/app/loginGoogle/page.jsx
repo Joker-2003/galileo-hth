@@ -14,10 +14,13 @@ export default function Login() {
       console.log(res);
       localStorage.setItem('isLoggedIn', 'true'); // Store login state in local storage
       localStorage.setItem('userid', res.user.uid); // Store user ID in local storage
+      localStorage.setItem('username', res.user.displayName); // Store username in local storage
+      localStorage.setItem('email', res.user.email); // Store email in local storage
+      localStorage.setItem('photoURL', res.user.photoURL); // Store photo URL in local storage
 
       //make req query to get user data
-
       router.push('/dashboard'); // Redirect to the dashboard after login
+      return;
     } catch (err) {
       setError('Failed to log in. Please try again.');
       console.error(err);
