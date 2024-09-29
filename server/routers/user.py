@@ -14,17 +14,17 @@ async def create_user(user_input: UserInsertForm):
     # Check if user already exists
     user = await User.find_one(User.email == user_input.email)
     if user:
-        raise HTTPException(status_code=400, detail="User already exists")
 
-    user = User(
-        email=user_input.email,
-        password=user_input.password,
-        first_name=user_input.first_name,
-        last_name=user_input.last_name,
-        occupation=user_input.occupation,
-        education=user_input.education
-    )
-    await User.insert_one(user)
+        raise HTTPException(status_code=400, detail="User already exists")
+    else:
+        user = User(
+            email=user_input.email,
+            password=user_input.password,
+            name=user_input.name,
+            occupation=user_input.occupation,
+            education=user_input.education
+        )
+        await User.insert_one(user)
 
     return UserResponse.from_user(user)
 
@@ -56,10 +56,8 @@ async def update_user(user_id: PydanticObjectId, user_update: UserUpdateForm):
         updates[User.email] = user_update.email
     if user_update.password is not None:
         updates[User.password] = user_update.password
-    if user_update.first_name is not None:
-        updates[User.first_name] = user_update.first_name
-    if user_update.last_name is not None:
-        updates[User.last_name] = user_update.last_name
+    if user_update.name is not None:
+        updates[User.name] = user_update.name
     if user_update.occupation is not None:
         updates[User.occupation] = user_update.occupation
     if user_update.education is not None:

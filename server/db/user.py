@@ -14,10 +14,8 @@ class Education(BaseModel):
 class User(Document):
     email: Indexed(str, unique=True)
     password: str
-    first_name: str
-    last_name: str
+    name: str
     occupation: Optional[str] = None
-    education: Optional[Education] = None
     registered_at: datetime = datetime.now()
     last_updated_at: datetime = datetime.now()
     last_login_at: Optional[datetime] = None  # When the user is created, last_login_at is None
@@ -29,8 +27,7 @@ class User(Document):
 class UserResponse(BaseModel):
     user_id: str
     email: str
-    first_name: str
-    last_name: str
+    name: str
     occupation: Optional[str] = None
     education: Optional[Education] = None
     last_updated_at: datetime
@@ -40,8 +37,7 @@ class UserResponse(BaseModel):
         return cls(
             user_id=str(user.id),
             email=user.email,
-            first_name=user.first_name,
-            last_name=user.last_name,
+            name=user.name,
             occupation=user.occupation,
             education=user.education,
             last_updated_at=user.last_updated_at
@@ -51,8 +47,7 @@ class UserResponse(BaseModel):
 class UserInsertForm(BaseModel):
     email: str
     password: str
-    first_name: str
-    last_name: str
+    name: str
     occupation: Optional[str] = None
     education: Optional[Education] = None
 
@@ -60,8 +55,7 @@ class UserInsertForm(BaseModel):
 class UserUpdateForm(BaseModel):
     email: Optional[str] = None
     password: Optional[str] = None
-    first_name: Optional[str] = None
-    last_name: Optional[str] = None
+    name: Optional[str] = None
     occupation: Optional[str] = None
     education: Optional[Education] = None
     last_login_at: Optional[datetime] = None

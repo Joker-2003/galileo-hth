@@ -8,10 +8,10 @@ from fastapi import UploadFile, HTTPException, Depends
 from starlette.requests import Request
 
 from server.config import Settings, get_settings
-from server.db import User, WorkspaceResponse, Workspace, WorkspaceInsertForm, Flashcard, Topic, DocumentStore, \
-    WorkspaceShareInsertForm, Quiz, FlashcardGroup
+from server.db import (User, WorkspaceResponse, Workspace, WorkspaceInsertForm,
+                       Flashcard, Topic, DocumentStore, WorkspaceShareInsertForm)
 from server.db.topic import TopicItem
-from server.utils import SyllabusParser, Syllabus, OutlineGenerator, MindmapGenerator, FlashcardGenerator
+from server.utils import SyllabusParser, Syllabus, MindmapGenerator, FlashcardGenerator
 from server.utils.pdf import load_pdf_text
 
 router = APIRouter(prefix="/workspace", tags=["workspace"])
@@ -162,54 +162,54 @@ async def share_workspace(share_form: WorkspaceShareInsertForm):
     new_workspace = Workspace.from_form(new_workspace_form)
     await new_workspace.insert()
 
-    old_topics = await Topic.find_many({'workspace_id': share_form.workspace_id}).to_list()
-    new_topics = []
-
-    for old_topic in old_topics:
-        new_topic = Topic(
-            workspace_id=str(new_workspace.id),
-            title=old_topic.title,
-            body=old_topic.body
-        )
-        new_topics.append(new_topic)
-    await Topic.insert_many(new_topics)
-
-    old_flashcards = await Flashcard.find_many({'workspace_id': share_form.workspace_id}).to_list()
-
-    new_flashcards = []
-    for old_flashcard in old_flashcards:
-        new_flashcard = Flashcard(
-            workspace_id=str(new_workspace.id),
-            front=old_flashcard.front,
-            back=old_flashcard.back
-        )
-        new_flashcards.append(new_flashcard)
-    await Flashcard.insert_many(new_flashcards)
-
-    flashcards_mapping = {
-        str(old_flashcard.id): str(new_flashcard.id)
-        for old_flashcard, new_flashcard in zip(old_flashcards, new_flashcards)
-    }
-
-    old_flashcard_groups = await FlashcardGroup.find_many({'workspace_id': share_form.workspace_id}).to_list()
-    new_flashcard_groups = []
-
-    for old_flashcard_group in old_flashcard_groups:
-        new_flashcard_group = FlashcardGroup(
-            workspace_id=str(new_workspace.id),
-            title=old_flashcard_group.title,
-            description=old_flashcard_group.description,
-            manual=old_flashcard_group.manual,
-            flashcards=[
-                flashcards_mapping[str(flashcard.to_ref().id)]
-                for flashcard in old_flashcard_group.flashcards
-            ]
-        )
-        new_flashcard_groups.append(new_flashcard_group)
-    await FlashcardGroup.insert_many(new_flashcard_groups)
-
-    quizzes = await Quiz.find_many({'workspace_id': share_form.workspace_id}).to_list()
-    for quiz in quizzes:
-        quiz.workspace_id = str(new_workspace.id)
-        quiz.created_at = datetime.now()
-    await Quiz.insert_many(quizzes)
+    # old_topics = await Topic.find_many({'workspace_id': share_form.workspace_id}).to_list()
+    # new_topics = []
+    #
+    # for old_topic in old_topics:
+    #     new_topic = Topic(
+    #         workspace_id=str(new_workspace.id),
+    #         title=old_topic.title,
+    #         body=old_topic.body
+    #     )
+    #     new_topics.append(new_topic)
+    # await Topic.insert_many(new_topics)
+    #
+    # old_flashcards = await Flashcard.find_many({'workspace_id': share_form.workspace_id}).to_list()
+    #
+    # new_flashcards = []
+    # for old_flashcard in old_flashcards:
+    #     new_flashcard = Flashcard(
+    #         workspace_id=str(new_workspace.id),
+    #         front=old_flashcard.front,
+    #         back=old_flashcard.back
+    #     )
+    #     new_flashcards.append(new_flashcard)
+    # await Flashcard.insert_many(new_flashcards)
+    #
+    # flashcards_mapping = {
+    #     str(old_flashcard.id): str(new_flashcard.id)
+    #     for old_flashcard, new_flashcard in zip(old_flashcards, new_flashcards)
+    # }
+    #
+    # old_flashcard_groups = await FlashcardGroup.find_many({'workspace_id': share_form.workspace_id}).to_list()
+    # new_flashcard_groups = []
+    #
+    # for old_flashcard_group in old_flashcard_groups:
+    #     new_flashcard_group = FlashcardGroup(
+    #         workspace_id=str(new_workspace.id),
+    #         title=old_flashcard_group.title,
+    #         description=old_flashcard_group.description,
+    #         manual=old_flashcard_group.manual,
+    #         flashcards=[
+    #             flashcards_mapping[str(flashcard.to_ref().id)]
+    #             for flashcard in old_flashcard_group.flashcards
+    #         ]
+    #     )
+    #     new_flashcard_groups.append(new_flashcard_group)
+    # await FlashcardGroup.insert_many(new_flashcard_groups)
+    #
+    # quizzes = await Quiz.find_many({'workspace_id': share_form.workspace_id}).to_list()
+    # for quiz in quizzes:
+    #     quiz.workspace_id = str(new_workspace.id)
+    #     quiz.created_at = datetime.now()
+    # await Quiz.insert_many(quizzes)

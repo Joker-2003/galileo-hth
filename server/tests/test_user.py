@@ -30,10 +30,9 @@ def get_user_by_email(email: str):
     return response.json()
 
 
-def update_user(user_id: str, first_name: str, last_name: str):
+def update_user(user_id: str, name: str):
     payload = {
-        "first_name": first_name,
-        "last_name": last_name,
+        "name": name,
     }
     headers = {'Content-Type': 'application/json'}
     response = requests.request("PUT", f"{LOCALHOST}/user/{user_id}", headers=headers, json=payload)
@@ -48,12 +47,10 @@ def delete_user(user_id: str):
 def test_user_results():
     user_id = create_user_if_not_exists()
     user = get_user_by_id(user_id)
-    assert user['first_name'] == 'Thomas'
-    assert user['last_name'] == 'Lin'
+    assert user['name'] == 'Thomas Lin'
     user = get_user_by_email('thomaslin910608@gmail.com')
-    assert user['first_name'] == 'Thomas'
-    assert user['last_name'] == 'Lin'
-    update_user(user_id, 'Tom', 'Lin')
+    assert user['name'] == 'Thomas Lin'
+    update_user(user_id, 'Tom')
     user = get_user_by_id(user_id)
     assert user['first_name'] == 'Tom'
     assert user['last_name'] == 'Lin'
