@@ -15,7 +15,7 @@ from server.routers import (
     flashcard as flashcard_routes,
     post as post_routes,
     quiz as quiz_routes,
-    upload as upload_routes,
+    document as upload_routes,
     user as user_routes,
     workspace as workspace_routes
 )

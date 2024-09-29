@@ -16,9 +16,10 @@ class MindmapGenerator:
         """
         Create an informative mindmap based on the provided text ({content}).
         
-        An example of such a mindmap is:
+        Below is an example of a mindmap:
         
         Barack Obama (born August 4, 1961) is an American politician who served as the 44th president of the United States from 2009 to 2017. A member of the Democratic Party, he was the first African-American president of the United States.
+        
         mindmap
         \troot("Barack Obama")
         \t\t("Born August 4, 1961")
@@ -68,6 +69,6 @@ class MindmapGenerator:
         self.llm = ChatOpenAI(model_name=model, api_key=api_key, )
         self.chain = self.prompt | self.llm | self.parser
 
-    def parse(self, content: str) -> List[Mindmap]:
+    def parse(self, content: str) -> Mindmap:
         query = self.template.format(content=content)
         return self.chain.invoke({"query": query})

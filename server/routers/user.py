@@ -29,7 +29,7 @@ async def create_user(user_input: UserInsertForm):
     return UserResponse.from_user(user)
 
 
-@router.get("/{user_id}", response_model=UserResponse)
+@router.get("/id/{user_id}", response_model=UserResponse)
 async def get_user_by_id(user_id: PydanticObjectId):
     user = await User.get(user_id)
     if not user:
@@ -37,7 +37,7 @@ async def get_user_by_id(user_id: PydanticObjectId):
     return UserResponse.from_user(user)
 
 
-@router.get("/", response_model=UserResponse)
+@router.get("/email/{email}", response_model=UserResponse)
 async def get_user_by_email(email: str):
     user = await User.find_one(User.email == email)
     if not user:
@@ -66,7 +66,7 @@ async def update_user(user_id: PydanticObjectId, user_update: UserUpdateForm):
         updates[User.education] = user_update.education
 
     if updates:
-        updates[User.last_updated_at] = datetime.utcnow()
+        updates[User.last_updated_at] = datetime.now()
 
     await user.set(updates)
     return UserResponse.from_user(user)
