@@ -37,41 +37,41 @@ export default function WorkspacePage() {
   const [activeTab, setActiveTab] = useState('review');
   const sectionRefs = useRef({});
 
-  const projects = [
+  const flashcards = [
     {
-      title: "Quiz 1 - Introduction",
+      title: "FlashCard 1 - Introduction",
       id : "123",
       description:
         "Pre built quizzes to help you test your knowledge on various topics.",
       count : 10,
-     link: `/dashboard/${workspaceid}/review/quiz/${123}`,
+     link: `/dashboard/${workspaceid}/review/flashcards/${123}`,
     },
     {
-      title: "Quiz 2 - Advanced",
+      title: "FlashCard  2 - Advanced",
       id : "456",
       description:
         "Quiz to help you memorize important concepts and terms.",
         count : 10,
-      link: `/dashboard/${workspaceid}/review/quiz/${456}`,
+      link: `/dashboard/${workspaceid}/review/flashcards/${456}`,
     },
     {
-      title: "Quiz 2 - Advanced",
+      title: "FlashCard 2 - Advanced",
       id : "456",
       description:
         "Quiz to help you memorize important concepts and terms.",
         count : 10,
-      link: `/dashboard/${workspaceid}/review/quiz/${456}`,
+      link: `/dashboard/${workspaceid}/review/flashcards/${456}`,
     },
     {
-      title: "Quiz 2 - Advanced",
+      title: "FlashCard 2 - Advanced",
       id : "456",
       description:
         "Quiz to help you memorize important concepts and terms.",
         count : 10,
-      link: `/dashboard/${workspaceid}/review/quiz/${456}`,
+      link: `/dashboard/${workspaceid}/review/flashcards/${456}`,
     },
     {
-      title: "Quiz 2 - Advanced",
+      title: "FlashCard  2 - Advanced",
       id : "456",
       description:
         "Quiz to help you memorize important concepts and terms.",
@@ -133,7 +133,12 @@ export default function WorkspacePage() {
             </button>
           </div>
 
-          {/* Content */}
+         {/* Flashcards: Three per Row */}
+         <div className="max-w-5xl mx-auto px-8">
+            <div className="flex flex-wrap">
+            <HoverEffect items={flashcards} />
+            </div>
+          </div>
 
         </div>
       </div>
