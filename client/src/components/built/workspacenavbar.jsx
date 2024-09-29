@@ -5,7 +5,8 @@ import { Menu, X, ChevronDown } from "lucide-react"; // Icons for mobile toggle 
 import Link from "next/link";
 import { HoverBorderGradient } from "../ui/hover-border-gradient";
 import ThemeToggle from "./themetoggle";
-import { useRouter } from "next/navigation"; // Import useRouter hook
+import { useRouter, useParams } from "next/navigation"; // Import useRouter hook
+
 
 // Sample data for workspaces
 const workspaces = [
@@ -21,10 +22,13 @@ const workspaces = [
 ];
 
 const WorkspaceNavbar = () => {
+  const { workspaceid } = useParams();
   const [isMenuOpen, setIsMenuOpen] = useState(false); // For mobile menu
   const [isWorkspaceDropdownOpen, setIsWorkspaceDropdownOpen] = useState(false); // For workspace dropdown
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false); // For profile dropdown
-  const [selectedWorkspace, setSelectedWorkspace] = useState(workspaces[0]); // Default workspace
+  const [selectedWorkspace, setSelectedWorkspace] = useState(
+    workspaces.find((workspace) => workspace.workspaceId === parseInt(workspaceid)) || workspaces[0]
+  ); // Default workspace
   const router = useRouter(); // Initialize useRouter
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
