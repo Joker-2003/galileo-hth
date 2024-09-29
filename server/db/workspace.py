@@ -43,6 +43,8 @@ class WorkspaceResponse(BaseModel):
     workspace_id: str
     user_id: str
     title: str
+    mindmap_title: Optional[str]
+    mindmap_content: Optional[str]
     created_at: datetime
     updated_at: datetime
 
@@ -52,6 +54,8 @@ class WorkspaceResponse(BaseModel):
             workspace_id=str(workspace.id),
             user_id=str(workspace.user_id),
             title=workspace.title,
+            mindmap_title=workspace.mindmap_title,
+            mindmap_content=workspace.mindmap_content,
             created_at=workspace.created_at,
             updated_at=workspace.updated_at
         )
