@@ -59,5 +59,5 @@ class WorkspaceResponse(BaseModel):
 
 class WorkspaceShareInsertForm(BaseModel):
     workspace_id: str
-    user_id: str
+    email: str
     created_at: datetime = datetime.now()
