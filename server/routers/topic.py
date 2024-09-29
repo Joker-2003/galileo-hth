@@ -3,7 +3,7 @@ from typing import List
 from beanie import PydanticObjectId
 from fastapi import APIRouter, HTTPException
 
-from server.db import Topic
+from server.db import Topic, TopicInsertForm
 
 router = APIRouter(prefix="/topic", tags=["topic"])
 
@@ -29,4 +29,11 @@ async def mark_topic_done(topic_id: PydanticObjectId):
         raise HTTPException(status_code=404, detail="Topic not found")
     topic.done = True
     await topic.update({Topic.done: True})
+    return topic
+
+
+@router.post("/")
+async def add_topic_to_workspace(topic_form: TopicInsertForm):
+    topic = Topic.from_form(topic_form)
+    await topic.insert()
     return topic

@@ -55,3 +55,9 @@ class WorkspaceResponse(BaseModel):
             created_at=workspace.created_at,
             updated_at=workspace.updated_at
         )
+
+
+class WorkspaceShareInsertForm(BaseModel):
+    workspace_id: str
+    user_id: str
+    created_at: datetime = datetime.now()

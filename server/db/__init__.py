@@ -8,5 +8,5 @@ from .flashcard import (
     FlashcardGroup, FlashcardGroupInsertForm, FlashcardGroupResponse,
     FlashcardReviewAttempt, FlashcardReviewAttemptInsertForm, FlashcardAttemptResponse
 )
-from .topic import Topic
-from .workspace import Workspace, WorkspaceInsertForm, WorkspaceResponse
+from .topic import Topic, TopicInsertForm, TopicItem
+from .workspace import Workspace, WorkspaceShareInsertForm, WorkspaceInsertForm, WorkspaceResponse
