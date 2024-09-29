@@ -23,6 +23,6 @@ const googleLogout = () => {
 };
 
 const checkLoggedIn = () => {
-  return (localStorage.getItem('isLoggedIn') && localStorage.getItem('isLoggedIn')  === 'true');
+  return localStorage.getItem('isLoggedIn') && localStorage.getItem('isLoggedIn') == 'true';
 };
-export { auth, provider , googleLogout};
+export { auth, provider , googleLogout, checkLoggedIn};
