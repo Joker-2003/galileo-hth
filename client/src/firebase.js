@@ -22,4 +22,4 @@ const googleLogout = () => {
   });
 };
 
-export { auth, provider };
+export { auth, provider , googleLogout};
