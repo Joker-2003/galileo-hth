@@ -48,7 +48,7 @@ def test_user_results():
     user_id = create_user_if_not_exists()
     user = get_user_by_id(user_id)
     assert user['name'] == 'Thomas Lin'
-    user = get_user_by_email('thomaslin910608@gmail.com')
+    user = get_user_by_email('test1@gmail.com')
     assert user['name'] == 'Thomas Lin'
     update_user(user_id, 'Tom')
     user = get_user_by_id(user_id)

@@ -29,6 +29,11 @@ def add_topic_to_workspace(workspace_id: str):
     return response.json()
 
 
+def get_topics_of_workspace(workspace_id: str):
+    response = requests.get(f"{LOCALHOST}/topic/workspace/{workspace_id}")
+    return response.json()
+
+
 def share_workspace(workspace_id: str, email: str):
     response = requests.post(
         f"{LOCALHOST}/workspace/share",
@@ -54,7 +59,8 @@ def test_workspace_share():
     workspace_id = create_workspace(user_id1)
 
     add_topic_to_workspace(workspace_id)
+    topics = get_topics_of_workspace(workspace_id)
+    assert len(topics) == 1
 
     user_id2 = create_user_if_not_exists("test2@gmail.com")
     new_workspace = share_workspace(workspace_id, "test2@gmail.com")
-    print(new_workspace)

@@ -1,11 +1,9 @@
 import random
 from typing import List
 
-from beanie import PydanticObjectId, DeleteRules
-from beanie.odm.operators.find.comparison import In
-from beanie.odm.operators.update.array import AddToSet, Pop, Pull
+from beanie import PydanticObjectId
+from beanie.odm.operators.update.array import AddToSet
 from beanie.odm.operators.update.general import Set
-from bson import DBRef
 from fastapi import APIRouter, HTTPException
 
 from server.db import (

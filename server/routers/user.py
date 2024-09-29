@@ -58,14 +58,8 @@ async def update_user(user_id: PydanticObjectId, user_update: UserUpdateForm):
     updates = {}
     if user_update.email is not None:
         updates[User.email] = user_update.email
-    if user_update.password is not None:
-        updates[User.password] = user_update.password
     if user_update.name is not None:
         updates[User.name] = user_update.name
-    if user_update.occupation is not None:
-        updates[User.occupation] = user_update.occupation
-    if user_update.education is not None:
-        updates[User.education] = user_update.education
 
     if updates:
         updates[User.last_updated_at] = datetime.now()
