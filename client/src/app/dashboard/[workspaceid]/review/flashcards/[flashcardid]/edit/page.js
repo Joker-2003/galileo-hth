@@ -10,10 +10,12 @@ import { useEffect, useRef, useState } from 'react';
 export default function WorkspacePage() {
   const router = useRouter();
   const { workspaceid, topicid } = useParams();
+  const {flashcardid} = useParams();
 
   const [activeSection, setActiveSection] = useState('int');
   const [activeTab, setActiveTab] = useState('review');
   const sectionRefs = useRef({});
+
   
   const [flashcards, setFlashcards] = useState([
     {
@@ -71,9 +73,11 @@ export default function WorkspacePage() {
   const handleAddFlashcard = () => {
     const updatedFlashcards = 
       {
-        front: <> {newFlashcard.front} </>,
-        back: <> {newFlashcard.back} </>,
+        front:newFlashcard.front,
+        back:newFlashcard.back,
+		groupid: flashcardid,
       };
+
   
   	 console.log(JSON.stringify(updatedFlashcards)); // Print the updated flashcards in JSON format
     setShowModal(false); // Close the modal
