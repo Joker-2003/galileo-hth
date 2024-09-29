@@ -119,41 +119,8 @@ export default function WorkspacePage() {
             </button>
           </div>
 
-          {/* Flashcard */}
-          <div className="flex justify-center items-center h-[70vh]">
-            <div className="w-[300px] md:w-[500px] h-[400px] md:h-[600px] perspective">
-              <div
-                className={`relative w-full h-full text-center transition-transform duration-700 ease-in-out transform ${flipped ? "rotate-y-180" : ""}`}
-                onClick={() => setFlipped(!flipped)}
-              >
-                {/* Front Side */}
-                <div className="absolute w-full h-full backface-hidden rounded-lg shadow-lg bg-blue-200 p-10 flex flex-col justify-center items-center text-2xl font-bold">
-                  {flashcards[currentCardIndex].frontHTML}
-                </div>
-
-                {/* Back Side */}
-                <div className="absolute w-full h-full backface-hidden rounded-lg shadow-lg bg-blue-500 p-10 flex flex-col justify-center items-center text-white text-2xl font-bold transform rotate-y-180">
-                  {flashcards[currentCardIndex].backHTML}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Controls */}
-          <div className="flex justify-center mt-4 space-x-4">
-            <button
-              onClick={handlePrevCard}
-              className="px-6 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition-all"
-            >
-              Previous
-            </button>
-            <button
-              onClick={handleNextCard}
-              className="px-6 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition-all"
-            >
-              Next
-            </button>
-          </div>
+     
+         
         </div>
       </div>
     </ThemeProvider>
