@@ -47,8 +47,10 @@ export default function WorkspacePage() {
       link: `/dashboard/${workspaceid}/review/flashcards/123`,
       mannual: true,
       buttons: [
+        { link: `/dashboard/${workspaceid}/review/flashcards/123`, value: "Learn" },
         { link: `/dashboard/${workspaceid}/review/flashcards/123/edit`, value: "Edit" },
-        { link: `/dashboard/${workspaceid}/review/flashcards/123/review`, value: "Review" }
+        { link: `/dashboard/${workspaceid}/review/flashcards/123/test`, value: "Test" },
+      
       ]
     },
     {
@@ -59,8 +61,9 @@ export default function WorkspacePage() {
       link: `/dashboard/${workspaceid}/review/flashcards/456`,
       mannual: true,
       buttons: [
+        { link:`/dashboard/${workspaceid}/review/flashcards/456`, value: "Learn" },
         { link:`/dashboard/${workspaceid}/review/flashcards/456/edit`, value: "Edit" },
-        { link:`/dashboard/${workspaceid}/review/flashcards/456/review`, value: "Review" }
+        { link:`/dashboard/${workspaceid}/review/flashcards/456/test`, value: "Test" }
       ]
     },
     {
@@ -71,7 +74,8 @@ export default function WorkspacePage() {
       link: `/dashboard/${workspaceid}/review/flashcards/789`,
       mannual: false,
       buttons: [
-        { link: `/dashboard/${workspaceid}/review/flashcards/789/review`, value: "Review" }
+        { link: `/dashboard/${workspaceid}/review/flashcards/789`, value: "Learn" },
+        { link: `/dashboard/${workspaceid}/review/flashcards/789/test`, value: "Test" }
       ]
     },
     {
@@ -82,7 +86,8 @@ export default function WorkspacePage() {
       link: `/dashboard/${workspaceid}/review/flashcards/101`,
       mannual: false,
       buttons: [
-        { link : `/dashboard/${workspaceid}/review/flashcards/101/review`, value: "Review" }
+        { link : `/dashboard/${workspaceid}/review/flashcards/101`, value: "Learn" },
+        { link : `/dashboard/${workspaceid}/review/flashcards/101/test`, value: "Test" }
       ]
     },
   ];
