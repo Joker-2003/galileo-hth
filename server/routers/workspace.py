@@ -19,7 +19,7 @@ router = APIRouter(prefix="/workspace", tags=["workspace"])
 
 @router.get("/user/{user_id}", response_model=list[WorkspaceResponse])
 async def get_workspaces(user_id: PydanticObjectId):
-    workspaces = await Workspace.find_many(Workspace.user_id == user_id).to_list()
+    workspaces = await Workspace.find_many(Workspace.user_id == User.get_ref(user_id)).to_list()
     return [WorkspaceResponse.from_workspace(workspace) for workspace in workspaces]
 
 
@@ -55,7 +55,7 @@ async def share_workspace(share_form: WorkspaceShareInsertForm):
     new_workspace = Workspace.from_form(new_workspace_form)
     await new_workspace.insert()
 
-    old_topics = await Topic.find_many(Topic.workspace_id == share_form.workspace_id).to_list()
+    old_topics = await Topic.find_many({"workspace_id": Workspace.get_ref(share_form.workspace_id)}).to_list()
     new_topics = []
 
     for old_topic in old_topics:
@@ -69,7 +69,7 @@ async def share_workspace(share_form: WorkspaceShareInsertForm):
     if new_topics:
         await Topic.insert_many(new_topics)
 
-    old_flashcards = await Flashcard.find_many({'workspace_id': share_form.workspace_id}).to_list()
+    old_flashcards = await Flashcard.find_many({'workspace_id': Workspace.get_ref(share_form.workspace_id)}).to_list()
 
     new_flashcards = []
     for old_flashcard in old_flashcards:
@@ -88,7 +88,8 @@ async def share_workspace(share_form: WorkspaceShareInsertForm):
         for old_flashcard, new_flashcard in zip(old_flashcards, new_flashcards)
     }
 
-    old_flashcard_groups = await FlashcardGroup.find_many({'workspace_id': share_form.workspace_id}).to_list()
+    old_flashcard_groups = await FlashcardGroup.find_many(
+        {'workspace_id': Workspace.get_ref(share_form.workspace_id)}).to_list()
     new_flashcard_groups = []
 
     for old_flashcard_group in old_flashcard_groups:
@@ -107,7 +108,7 @@ async def share_workspace(share_form: WorkspaceShareInsertForm):
     if new_flashcard_groups:
         await FlashcardGroup.insert_many(new_flashcard_groups)
 
-    quizzes = await Quiz.find_many({'workspace_id': share_form.workspace_id}).to_list()
+    quizzes = await Quiz.find_many({'workspace_id': Workspace.get_ref(share_form.workspace_id)}).to_list()
     for quiz in quizzes:
         quiz.workspace_id = str(new_workspace.id)
         quiz.created_at = datetime.now()
@@ -179,10 +180,6 @@ async def init_workspace(
     for topic in syllabus.topics:
         topic_items = [
             TopicItem(
-                content_type="title",
-                text="Week " + str(topic.week) + ": " + topic.name
-            ),
-            TopicItem(
                 content_type="subtitle",
                 text="Summary"
             ),
@@ -210,7 +207,7 @@ async def init_workspace(
 
         topic = Topic(
             workspace_id=workspace_id,
-            title=topic.name,
+            title=f'Week {topic.week}: {topic.name}',
             body=topic_items
         )
         topics.append(topic)

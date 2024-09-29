@@ -1,9 +1,6 @@
-from pathlib import Path
+import json
 
 import requests
-import json
-import os
-
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 

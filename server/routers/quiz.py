@@ -4,22 +4,27 @@ from beanie import PydanticObjectId
 from fastapi import APIRouter, HTTPException
 
 from server.db import Quiz, QuizResponse, QuizResultResponse, QuizAttempt, QuizAttemptInsertForm, QuestionResultItem, \
-    Workspace
+    Workspace, QuizInsertForm
 
 router = APIRouter(prefix="/quiz", tags=["quiz"])
 
 
 @router.get("/{quiz_id}", response_model=List[QuizResponse])
 async def get_quiz_for_workspace(quiz_id: PydanticObjectId, workspace_id: PydanticObjectId):
-    quiz = await Quiz.get({
-        "_id": quiz_id, "workspace_id": Workspace.get_ref(workspace_id)
-    })
-
+    quiz = await Quiz.get(quiz_id)
     if not quiz:
         raise HTTPException(status_code=404, detail=f"Quiz {quiz_id} not found")
 
-    quiz_attempts = await QuizAttempt.find_many({"quiz_id": quiz_id, "workspace_id": workspace_id}).to_list()
+    quiz_attempts = await QuizAttempt.find_many(
+        {"quiz_id": Quiz.get_ref(quiz_id), "workspace_id": Workspace.get_ref(workspace_id)}).to_list()
     return QuizResponse.from_quiz(quiz, quiz_attempts)
+
+
+@router.post("/create", response_model=QuizResponse)
+async def create_quiz(quiz_form: QuizInsertForm):
+    quiz = Quiz.from_form(quiz_form)
+    await quiz.insert()
+    return QuizResponse.from_quiz(quiz, [])
 
 
 @router.post("/{quiz_id}/attempt", response_model=QuizResultResponse)

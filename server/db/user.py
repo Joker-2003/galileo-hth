@@ -1,7 +1,8 @@
 from datetime import datetime
 from typing import Optional
 
-from beanie import Document, Indexed
+from beanie import Document, Indexed, PydanticObjectId
+from bson import DBRef
 from pydantic import BaseModel
 
 
@@ -13,6 +14,10 @@ class User(Document):
     registered_at: datetime = datetime.now()
     last_updated_at: datetime = datetime.now()
     last_login_at: Optional[datetime] = None  # When the user is created, last_login_at is None
+
+    @classmethod
+    def get_ref(cls, workspace_id: str | PydanticObjectId):
+        return DBRef(cls.Settings.name, workspace_id)
 
     class Settings:
         name = "users"

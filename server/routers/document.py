@@ -5,7 +5,6 @@ from beanie import PydanticObjectId
 from botocore.exceptions import NoCredentialsError, PartialCredentialsError
 from fastapi import APIRouter
 from fastapi import UploadFile, File, HTTPException, Depends
-from starlette.requests import Request
 from starlette.responses import StreamingResponse
 
 from server.config import Settings, get_settings

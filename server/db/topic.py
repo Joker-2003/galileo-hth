@@ -1,6 +1,7 @@
 from datetime import datetime
 
-from beanie import Document, Link
+from beanie import Document, Link, PydanticObjectId
+from bson import DBRef
 from pydantic import BaseModel
 
 from .workspace import Workspace
@@ -36,3 +37,19 @@ class Topic(Document):
 
     class Settings:
         name = "topics"
+
+
+class TopicResponse(BaseModel):
+    workspace_id: str
+    title: str
+    body: list[TopicItem]
+    done: bool
+
+    @classmethod
+    def from_topic(cls, topic: Topic):
+        return cls(
+            workspace_id=str(topic.workspace_id.to_ref().id),
+            title=topic.title,
+            body=topic.body,
+            done=topic.done
+        )

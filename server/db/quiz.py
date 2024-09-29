@@ -1,7 +1,7 @@
 from collections import defaultdict
 from datetime import datetime
 
-from beanie import Document, Link
+from beanie import Document, Link, PydanticObjectId
 from bson import DBRef
 from pydantic import BaseModel
 
@@ -28,12 +28,32 @@ class Question(BaseModel):
     explanations: dict[str, QuestionOptionExplanation]  # Option ID -> Explanation
 
 
+class QuizInsertForm(BaseModel):
+    workspace_id: str
+    title: str
+    introduction: str
+    questions: list[Question]
+
+
 class Quiz(Document):
     workspace_id: Link[Workspace]
     title: str
     introduction: str
     questions: list[Question]
     created_at: datetime = datetime.now()
+
+    @classmethod
+    def get_ref(cls, workspace_id: str | PydanticObjectId):
+        return DBRef(cls.Settings.name, workspace_id)
+
+    @classmethod
+    def from_form(cls, quiz_form: QuizInsertForm):
+        return cls(
+            workspace_id=quiz_form.workspace_id,
+            title=quiz_form.title,
+            introduction=quiz_form.introduction,
+            questions=quiz_form.questions
+        )
 
     class Settings:
         name = "quizzes"
@@ -78,7 +98,7 @@ class QuizAttempt(Document):
     def from_form(cls, quiz_attempt: QuizAttemptInsertForm):
         return cls(
             quiz_id=quiz_attempt.quiz_id,
-            workspace_id= quiz_attempt.workspace_id,
+            workspace_id=quiz_attempt.workspace_id,
             answers=[QuestionAttempt.from_form(answer) for answer in quiz_attempt.answers],
             created_at=quiz_attempt.created_at
         )
