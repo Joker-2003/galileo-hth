@@ -5,19 +5,11 @@ from beanie import Document, Indexed
 from pydantic import BaseModel
 
 
-class Education(BaseModel):
-    level: str
-    school: str
-    major: list[str]
-
-
 class User(Document):
     email: Indexed(str, unique=True)
-    password: str
-    first_name: str
-    last_name: str
-    occupation: Optional[str] = None
-    education: Optional[Education] = None
+    uid: Indexed(str, unique=True)
+    image: str
+    name: str
     registered_at: datetime = datetime.now()
     last_updated_at: datetime = datetime.now()
     last_login_at: Optional[datetime] = None  # When the user is created, last_login_at is None
@@ -29,10 +21,7 @@ class User(Document):
 class UserResponse(BaseModel):
     user_id: str
     email: str
-    first_name: str
-    last_name: str
-    occupation: Optional[str] = None
-    education: Optional[Education] = None
+    name: str
     last_updated_at: datetime
 
     @classmethod
@@ -40,28 +29,19 @@ class UserResponse(BaseModel):
         return cls(
             user_id=str(user.id),
             email=user.email,
-            first_name=user.first_name,
-            last_name=user.last_name,
-            occupation=user.occupation,
-            education=user.education,
+            name=user.name,
             last_updated_at=user.last_updated_at
         )
 
 
 class UserInsertForm(BaseModel):
     email: str
-    password: str
-    first_name: str
-    last_name: str
-    occupation: Optional[str] = None
-    education: Optional[Education] = None
+    uid: str
+    image: str
+    name: str
 
 
 class UserUpdateForm(BaseModel):
     email: Optional[str] = None
-    password: Optional[str] = None
-    first_name: Optional[str] = None
-    last_name: Optional[str] = None
-    occupation: Optional[str] = None
-    education: Optional[Education] = None
+    name: Optional[str] = None
     last_login_at: Optional[datetime] = None

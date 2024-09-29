@@ -11,9 +11,9 @@ def create_user_if_not_exists(email: str = "test1@gmail.com"):
     if response.status_code == 404:
         payload = json.dumps({
             "email": email,
-            "password": "password",
-            "first_name": "Thomas",
-            "last_name": "Lin"
+            "uid": f"uid+{email}",
+            "image": "image",
+            "name": "Thomas Lin"
         })
         headers = {'Content-Type': 'application/json'}
 
