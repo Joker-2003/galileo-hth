@@ -1,14 +1,17 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { Menu, X, ChevronDown } from "lucide-react"; // Icons for mobile toggle and dropdown
+import { Menu, X, ChevronDown} from "lucide-react"; // Icons for mobile toggle and dropdown
 import Link from "next/link";
 import { HoverBorderGradient } from "../ui/hover-border-gradient";
 import ThemeToggle from "./themetoggle";
+import gal from "@/assets/gal2.png";
+import Image from "next/image";
 
 const SexyNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // For profile dropdown
+  const [user, setUser] = useState(localStorage.getItem("user"));
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
@@ -38,8 +41,8 @@ const SexyNavbar = () => {
                 className="flex items-center space-x-2 focus:outline-none"
                 onClick={toggleDropdown}
               >
-                <img
-                  src="/profile-pic.jpg" // Add your profile picture URL or replace with a default avatar
+                <Image
+                  src={ user?.image || "https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png"} // Add your profile picture URL or replace with a default avatar
                   alt="Profile"
                   className="w-8 h-8 rounded-full object-cover"
                 />

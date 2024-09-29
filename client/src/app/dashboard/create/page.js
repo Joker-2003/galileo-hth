@@ -4,11 +4,13 @@ import SexyNavbar from '@/components/built/navbar';
 import { useState } from 'react';
 import { ThemeProvider } from '@/components/context/themecontext';
 import { useRouter } from 'next/navigation';
+import { createWorkspace, sendSyllabus } from '@/api/api';
 
 export default function CreateWorkspace() {
   const [workspaceName, setWorkspaceName] = useState('');
   const [file, setFile] = useState(null);
   const [error, setError] = useState('');
+  const [user, setUser] = useState(localStorage.getItem('user'));
   const router = useRouter(); // Initialize useRouter for navigation
 
   const handleFileSelect = (e) => {
@@ -32,7 +34,7 @@ export default function CreateWorkspace() {
     e.preventDefault();
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!file) {
@@ -40,14 +42,40 @@ export default function CreateWorkspace() {
       return;
     }
 
-    const formData = new FormData();
-    formData.append('workspaceName', workspaceName);
-    formData.append('file', file); // Append the single file
-
-    // For debugging purposes, printing all form data
-    for (let pair of formData.entries()) {
-      console.log(pair[0] + ':', pair[1]);
+    let response = await createWorkspace(user.user_id, workspaceName); // Call the createWorkspace API
+    if (!response) {
+      setError('Failed to create workspace.');
+      return;
     }
+    let workspaceid = response.workspace_id;
+
+    // Create a new FormData object
+    const formData = new FormData();
+    formData.append('file', file); // Append the selected file to FormData
+    formData.append('workspaceId', workspaceid); // Append the workspace ID
+
+    // Send the PDF file using the sendSyllabus API
+    let res = await sendSyllabus(formData);
+    
+    // Check if sending the syllabus was successful
+    if (!res) {
+      setError('Failed to send syllabus.');
+      return;
+    }
+
+    // Optionally clear the form
+    setWorkspaceName('');
+    
+
+
+    // const formData = new FormData();
+    // formData.append('workspaceName', workspaceName);
+    // formData.append('file', file); // Append the single file
+
+    // // For debugging purposes, printing all form data
+    // for (let pair of formData.entries()) {
+    //   console.log(pair[0] + ':', pair[1]);
+    // }
 
     // Optionally clear the form
     setWorkspaceName('');

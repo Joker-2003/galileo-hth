@@ -22,36 +22,26 @@ const DATA = `mindmap
                                 ("Replay or read from any point in time")
 `;
 
-const topics = [
-  {
-    id: 'introduction',
-    title: 'Introduction',
-    body: [
-      { type: 'text', content: `Lorem ipsum odor amet, consectetuer adipiscing elit.` },
-      { type: 'image', src: "https://i.redd.it/vrhjcvtakw661.jpg" },
-    ]
-  },
-  {
-    id: 'lesson1', title: 'Lesson 1: Basics', body: [
-      { type: 'text', content: "Hello, this is the introduction!" },
-      { type: 'image', src: "https://i.redd.it/vrhjcvtakw661.jpg" }
-    ]
-  },
-  {
-    id: 'lesson2', title: 'Lesson 2: Advanced', body: [
-      { type: 'text', content: "Hello, this is the advanced section!" },
-      { type: 'image', src: "https://i.redd.it/vrhjcvtakw661.jpg" }
-    ]
-  },
-];
+
+const topics = localStorage.getItem("topics");
 
 export default function WorkspacePage() {
+
+
   const router = useRouter();
   const { workspaceid, topicid } = useParams();
 
   const [activeSection, setActiveSection] = useState(topicid || '');
   const [activeTab, setActiveTab] = useState('mindmap');
   const sectionRefs = useRef({});
+
+  const [data, setData] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+        
+    }
+  },[]);
 
   const handleNavigation = (topic) => {
     setActiveSection(topic);
