@@ -1,6 +1,5 @@
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
-import Link from "next/link";
 import { useState } from "react";
 
 export const HoverEffectButton = ({ items, className }) => {
@@ -9,9 +8,8 @@ export const HoverEffectButton = ({ items, className }) => {
   return (
     <div className={cn("grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-10", className)}>
       {items.map((item, idx) => (
-        <Link
-          href={item?.link}
-          key={item?.link}
+        <div
+          key={item?.title} // Changed to use title as key
           className="relative group block p-2 h-full w-full"
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
@@ -42,7 +40,6 @@ export const HoverEffectButton = ({ items, className }) => {
                 {item?.buttons?.map((button, buttonIdx) => (
                   <Button
                     key={buttonIdx}
-                    href={button.link}
                     value={button.value}
                     onClick={button.onClick} // Pass the onClick prop here
                   />
@@ -50,7 +47,7 @@ export const HoverEffectButton = ({ items, className }) => {
               </div>
             </div>
           </Card>
-        </Link>
+        </div>
       ))}
     </div>
   );
@@ -87,18 +84,17 @@ const CardDescription = ({ className, children }) => {
   );
 };
 
-const Button = ({ href, value, onClick, className }) => {
+const Button = ({ value, onClick, className }) => {
   return (
-    <Link href={href} onClick={onClick}>
-      <button
-        type="button" // Ensure it's a button
-        className={cn(
-          "text-sm py-1 px-2 bg-blue-500 text-white rounded-full hover:bg-blue-700 transition-all",
-          className
-        )}
-      >
-        {value}
-      </button>
-    </Link>
+    <button
+      type="button" // Ensure it's a button
+      className={cn(
+        "text-sm py-1 px-2 bg-blue-500 text-white rounded-full hover:bg-blue-700 transition-all",
+        className
+      )}
+      onClick={onClick} // Use onClick prop
+    >
+      {value}
+    </button>
   );
 };
