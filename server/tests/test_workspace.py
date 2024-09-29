@@ -30,8 +30,8 @@ def add_topic_to_workspace(workspace_id: str):
 
 
 def share_workspace(workspace_id: str, user_id: str):
-    response = requests.post(
-        f"{LOCALHOST}/workspace/share/{workspace_id}/{user_id}"
+    response = requests.get(
+        f"{LOCALHOST}/workspace/temp"
     )
     return response.json()
 
