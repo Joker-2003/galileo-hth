@@ -16,6 +16,8 @@ async def create_user(user_input: UserInsertForm):
     if not user:
         user = User(
             email=user_input.email,
+            uid=user_input.uid,
+            image=user_input.image,
             name=user_input.name,
         )
         await User.insert_one(user)
@@ -28,6 +30,14 @@ async def get_user_by_id(user_id: PydanticObjectId):
     user = await User.get(user_id)
     if not user:
         raise HTTPException(status_code=404, detail="User not found by user_id")
+    return UserResponse.from_user(user)
+
+
+@router.get("/uid/{uid}", response_model=UserResponse)
+async def get_user_by_uid(uid: str):
+    user = await User.find_one(User.uid == uid)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found by uid")
     return UserResponse.from_user(user)
 
 

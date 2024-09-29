@@ -7,6 +7,8 @@ from pydantic import BaseModel
 
 class User(Document):
     email: Indexed(str, unique=True)
+    uid: Indexed(str, unique=True)
+    image: str
     name: str
     registered_at: datetime = datetime.now()
     last_updated_at: datetime = datetime.now()
@@ -34,6 +36,8 @@ class UserResponse(BaseModel):
 
 class UserInsertForm(BaseModel):
     email: str
+    uid: str
+    image: str
     name: str
 
 
