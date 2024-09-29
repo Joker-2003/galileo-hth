@@ -1,0 +1,34 @@
+import json
+import requests
+
+LOCALHOST = "http://0.0.0.0:8000"
+
+
+def create_user_if_not_exists(email: str = "thomaslin910608@gmail.com"):
+    response = requests.request("GET", f"{LOCALHOST}/user?email={email}")
+    if response.status_code == 404:
+        payload = json.dumps({
+            "email": "thomaslin910608@gmail.com",
+            "password": "password",
+            "first_name": "Thomas",
+            "last_name": "Lin"
+        })
+        headers = {'Content-Type': 'application/json'}
+
+        response = requests.request("POST", f"{LOCALHOST}/user", headers=headers, data=payload)
+        user_id = response.json()['user_id']
+    else:
+        user_id = response.json()['user_id']
+    return user_id
+
+
+def create_workspace(user_id: str):
+    payload = json.dumps({
+        "user_id": user_id,
+        "title": "Test Workspace"
+    })
+    headers = {'Content-Type': 'application/json'}
+
+    response = requests.request("POST", f"{LOCALHOST}/workspace", headers=headers, data=payload)
+    workspace_id = response.json()['workspace_id']
+    return workspace_id

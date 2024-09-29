@@ -4,6 +4,7 @@ import WorkspaceNavbar from '@/components/built/workspacenavbar';
 import { ThemeProvider } from '@/components/context/themecontext';
 import { HoverEffectButton } from '@/components/ui/card-hover-buttons';
 import { HoverEffect } from '@/components/ui/card-hover-effect';
+import { HoverBorderGradient } from '@/components/ui/hover-border-gradient';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
@@ -37,6 +38,9 @@ export default function WorkspacePage() {
   const [activeSection, setActiveSection] = useState('int');
   const [activeTab, setActiveTab] = useState('review');
   const sectionRefs = useRef({});
+  const [showModal, setShowModal] = useState(false);
+  const [collectionTitle, setCollectionTitle] = useState('');
+  const [collectionDescription, setCollectionDescription] = useState('');
 
   const flashcards = [
     {
@@ -49,8 +53,6 @@ export default function WorkspacePage() {
       buttons: [
         { link: `/dashboard/${workspaceid}/review/flashcards/123`, value: "Learn" },
         { link: `/dashboard/${workspaceid}/review/flashcards/123/edit`, value: "Edit" },
-
-      
       ]
     },
     {
@@ -61,9 +63,8 @@ export default function WorkspacePage() {
       link: `/dashboard/${workspaceid}/review/flashcards/456`,
       mannual: true,
       buttons: [
-        { link:`/dashboard/${workspaceid}/review/flashcards/456`, value: "Learn" },
-        { link:`/dashboard/${workspaceid}/review/flashcards/456/edit`, value: "Edit" },
-
+        { link: `/dashboard/${workspaceid}/review/flashcards/456`, value: "Learn" },
+        { link: `/dashboard/${workspaceid}/review/flashcards/456/edit`, value: "Edit" },
       ]
     },
     {
@@ -75,7 +76,6 @@ export default function WorkspacePage() {
       mannual: false,
       buttons: [
         { link: `/dashboard/${workspaceid}/review/flashcards/789`, value: "Learn" },
-
       ]
     },
     {
@@ -86,13 +86,10 @@ export default function WorkspacePage() {
       link: `/dashboard/${workspaceid}/review/flashcards/101`,
       mannual: false,
       buttons: [
-        { link : `/dashboard/${workspaceid}/review/flashcards/101`, value: "Learn" },
-       
+        { link: `/dashboard/${workspaceid}/review/flashcards/101`, value: "Learn" },
       ]
     },
   ];
-
-  
 
   const handleNavigation = (topic) => {
     setActiveSection(topic);
@@ -106,6 +103,18 @@ export default function WorkspacePage() {
     } else {
       router.push(`/dashboard/${workspaceid}/${tab}`);
     }
+  };
+
+  const handleAddCollection = () => {
+    const newCollection = {
+      title: collectionTitle,
+      description: collectionDescription,
+      workspaceid: workspaceid,
+    };
+    console.log(JSON.stringify(newCollection, null, 2));
+    setShowModal(false);
+    setCollectionTitle('');
+    setCollectionDescription('');
   };
 
   useEffect(() => {
@@ -158,10 +167,50 @@ export default function WorkspacePage() {
             <div className="flex flex-wrap">
               <HoverEffectButton items={mannualFlashcards} />
             </div>
-
-           
           </div>
         </div>
+
+        {/* Floating Button */}
+        <button
+          onClick={() => setShowModal(true)}
+          className="fixed bottom-10 right-10 bg-blue-500 text-white p-7 rounded-full shadow-lg hover:bg-blue-700 transition"
+        >
+          Add Collection
+        </button>
+
+        {/* Modal for Adding Collection */}
+        {showModal && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white dark:dark:bg-neutral-900 p-5 rounded-lg shadow-lg">
+              <h2 className="text-lg font-semibold mb-4">Add Collection</h2>
+              <input
+                type="text"
+                placeholder="Collection Title"
+                value={collectionTitle}
+                onChange={(e) => setCollectionTitle(e.target.value)}
+                className="border dark:bg-neutral-800 p-2 w-full mb-2"
+              />
+              <textarea
+                placeholder="Collection Description"
+                value={collectionDescription}
+                onChange={(e) => setCollectionDescription(e.target.value)}
+                className="border dark:bg-neutral-800  p-2 w-full mb-4"
+              />
+              <button
+                onClick={handleAddCollection}
+                className="bg-blue-500 text-white p-2 rounded hover:bg-blue-700"
+              >
+                Create
+              </button>
+              <button
+                onClick={() => setShowModal(false)}
+                className="ml-2 p-2 border border-gray-300 rounded hover:bg-gray-100 dark:hover:bg-neutral-700"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </ThemeProvider>
   );
