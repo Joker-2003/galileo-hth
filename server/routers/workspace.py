@@ -49,7 +49,7 @@ async def share_workspace(share_form: WorkspaceShareInsertForm):
     new_workspace = Workspace.from_form(new_workspace_form)
     await new_workspace.insert()
 
-    old_topics = await Topic.find_many({'workspace_id': share_form.workspace_id}).to_list()
+    old_topics = await Topic.find_many(Topic.workspace_id == share_form.workspace_id).to_list()
     new_topics = []
 
     for old_topic in old_topics:
