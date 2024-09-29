@@ -1,5 +1,2 @@
-from .mongodb import MongoDBDocumentStore
-
-__all__ = [
-    "MongoDBDocumentStore"
-]
+from .base import BaseDocumentStore
+from .in_memory import InMemoryDocumentStore

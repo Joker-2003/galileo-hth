@@ -40,7 +40,7 @@ class Planner(BaseComponent):
 
     def _compose_prompt(self, instruction) -> str:
         """
-        Compose the prompt from template, worker description, examples and instruction.
+        Compose the prompt from parse_template, worker description, examples and instruction.
         """
         worker_desctription = self._compose_worker_description()
         fewshot = self._compose_fewshot_prompt()

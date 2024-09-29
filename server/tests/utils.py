@@ -1,4 +1,6 @@
 import json
+from pathlib import Path
+
 import requests
 
 LOCALHOST = "http://0.0.0.0:8000"
@@ -32,3 +34,12 @@ def create_workspace(user_id: str):
     response = requests.request("POST", f"{LOCALHOST}/workspace", headers=headers, data=payload)
     workspace_id = response.json()['workspace_id']
     return workspace_id
+
+
+def init_workspace(workspace_id: str, file_path: Path):
+    url = f"{LOCALHOST}/workspace/{workspace_id}"
+    files = [
+        ('file', ('Syllabus.pdf', open(file_path, 'rb'), 'application/pdf'))
+    ]
+    response = requests.request("POST", url, files=files)
+    return response.json()

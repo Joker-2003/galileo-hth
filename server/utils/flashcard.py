@@ -1,24 +1,21 @@
-import os
-from typing import List, Tuple, Optional
+from typing import List
 
 from langchain_core.output_parsers import PydanticOutputParser
 from langchain_core.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
-from pydantic import BaseModel, Field, model_validator
-
-from server.config import get_settings
+from pydantic import BaseModel, Field
 
 
-class FlashCard(BaseModel):
+class Flashcard(BaseModel):
     front: str = Field(description="Term or Question")
     back: str = Field(description="Definition of the term or Answer to the question")
 
 
-class FlashCardSet(BaseModel):
-    cards: List[FlashCard] = Field(description="List of flashcards")
+class FlashcardSet(BaseModel):
+    cards: List[Flashcard] = Field(description="List of flashcards")
 
 
-class FlashCardGenerator:
+class FlashcardGenerator:
     template: str = (
         "Extract relevant terms or questions from the provided text ({content}). "
         "You can summarize for better understanding and conciseness. "
@@ -29,7 +26,7 @@ class FlashCardGenerator:
     )
 
     def __init__(self, model: str, api_key: str):
-        self.parser = PydanticOutputParser(pydantic_object=FlashCardSet)
+        self.parser = PydanticOutputParser(pydantic_object=FlashcardSet)
         self.prompt = PromptTemplate(
             template="Answer the user query.\n{format_instructions}\n{query}\n",
             input_variables=["query"],
@@ -38,7 +35,7 @@ class FlashCardGenerator:
         self.llm = ChatOpenAI(model_name=model, api_key=api_key)
         self.chain = self.prompt | self.llm | self.parser
 
-    def parse(self, content: str) -> List[FlashCard]:
+    def generate(self, content: str) -> List[Flashcard]:
         query = self.template.format(content=content)
         results = self.chain.invoke({"query": query})
         return results.cards

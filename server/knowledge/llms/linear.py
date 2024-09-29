@@ -37,7 +37,7 @@ class SimpleLinearPipeline(BaseComponent):
         )
 
         pipeline = SimpleLinearPipeline(
-            prompt=BasePromptComponent(template="what is {word} in Japanese ?"),
+            prompt=BasePromptComponent(parse_template="what is {word} in Japanese ?"),
             llm=llm,
             post_processor=identity,
         )
@@ -106,7 +106,7 @@ class GatedLinearPipeline(SimpleLinearPipeline):
         )
 
         pipeline = GatedLinearPipeline(
-            prompt=BasePromptComponent(template="what is {word} in Japanese ?"),
+            prompt=BasePromptComponent(parse_template="what is {word} in Japanese ?"),
             condition=RegexExtractor(pattern="some pattern"),
             llm=llm,
             post_processor=identity,

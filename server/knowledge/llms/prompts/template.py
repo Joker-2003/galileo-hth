@@ -33,9 +33,9 @@ class PromptTemplate:
 
     def check_missing_kwargs(self, **kwargs):
         """
-        Check if all the placeholders in the template are set.
+        Check if all the placeholders in the parse_template are set.
 
-        This function checks if all the expected placeholders in the template are set as
+        This function checks if all the expected placeholders in the parse_template are set as
             attributes of the object. If any placeholders are missing, a `ValueError`
             is raised with the names of the missing keys.
 
@@ -47,13 +47,13 @@ class PromptTemplate:
         """
         missing_keys = self.placeholders.difference(kwargs.keys())
         if missing_keys:
-            raise ValueError(f"Missing keys in template: {','.join(missing_keys)}")
+            raise ValueError(f"Missing keys in parse_template: {','.join(missing_keys)}")
 
     def check_redundant_kwargs(self, **kwargs):
         """
-        Check if all the placeholders in the template are set.
+        Check if all the placeholders in the parse_template are set.
 
-        This function checks if all the expected placeholders in the template are set as
+        This function checks if all the expected placeholders in the parse_template are set as
             attributes of the object. If any placeholders are missing, a `ValueError`
             is raised with the names of the missing keys.
 
@@ -68,20 +68,20 @@ class PromptTemplate:
 
         if redundant_keys:
             warnings.warn(
-                f"Keys provided but not in template: {','.join(redundant_keys)}",
+                f"Keys provided but not in parse_template: {','.join(redundant_keys)}",
                 UserWarning,
             )
 
     def populate(self, **kwargs) -> str:
         """
-        Strictly populate the template with the given keyword arguments.
+        Strictly populate the parse_template with the given keyword arguments.
 
         Args:
-            **kwargs: The keyword arguments to populate the template.
-                      Each keyword corresponds to a placeholder in the template.
+            **kwargs: The keyword arguments to populate the parse_template.
+                      Each keyword corresponds to a placeholder in the parse_template.
 
         Returns:
-            The populated template.
+            The populated parse_template.
 
         Raises:
             ValueError: If an unknown placeholder is provided.
@@ -92,14 +92,14 @@ class PromptTemplate:
 
     def partial_populate(self, **kwargs):
         """
-        Partially populate the template with the given keyword arguments.
+        Partially populate the parse_template with the given keyword arguments.
 
         Args:
-            **kwargs: The keyword arguments to populate the template.
-                      Each keyword corresponds to a placeholder in the template.
+            **kwargs: The keyword arguments to populate the parse_template.
+                      Each keyword corresponds to a placeholder in the parse_template.
 
         Returns:
-            str: The populated template.
+            str: The populated parse_template.
         """
         self.check_redundant_kwargs(**kwargs)
 
@@ -128,8 +128,8 @@ class PromptTemplate:
 
     def __add__(self, other):
         """
-        Create a new PromptTemplate object by concatenating the template of the current
-            object with the template of another PromptTemplate object.
+        Create a new PromptTemplate object by concatenating the parse_template of the current
+            object with the parse_template of another PromptTemplate object.
 
         Parameters:
             other (PromptTemplate): Another PromptTemplate object.

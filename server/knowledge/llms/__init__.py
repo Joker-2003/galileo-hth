@@ -10,10 +10,9 @@ from .chats import (
     LCAnthropicChat,
     LCAzureChatOpenAI,
     LCChatOpenAI,
-    LCWatsonChat,
     LCGeminiChat,
 )
-from .completions import LLM, AzureOpenAI, OpenAI, Watson
+from .completions import LLM, AzureOpenAI, OpenAI
 from .cot import ManualSequentialChainOfThought, Thought
 from .linear import GatedLinearPipeline, SimpleLinearPipeline
 from .prompts import BasePromptComponent, PromptTemplate
@@ -31,13 +30,11 @@ __all__ = [
     "ChatOpenAI",
     "LCAnthropicChat",
     "LCGeminiChat",
-    "LCWatsonChat",
     "LCAzureChatOpenAI",
     "LCChatOpenAI",
     # completion-specific components
     "LLM",
     "OpenAI",
-    "Watson",
     "AzureOpenAI",
     # prompt-specific components
     "BasePromptComponent",

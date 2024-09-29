@@ -15,8 +15,9 @@ from server.routers import (
     flashcard as flashcard_routes,
     post as post_routes,
     quiz as quiz_routes,
-    document as upload_routes,
+    document as document_routes,
     user as user_routes,
+topic as topic_routes,
     workspace as workspace_routes
 )
 from server.db import (
@@ -24,6 +25,7 @@ from server.db import (
     Quiz, QuizAttempt, Flashcard, FlashcardGroup, FlashcardReviewAttempt,
     Topic, Workspace
 )
+from server.utils import SyllabusParser, MindmapGenerator, FlashcardGenerator, OutlineGenerator, QuizGenerator
 
 logging.basicConfig(level=logging.DEBUG, filename='logs/app.log', filemode='a',
                     format='%(asctime)s - %(levelname)s - %(message)s')
@@ -33,6 +35,7 @@ logger = logging.getLogger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     settings = get_settings()
+
     logger.info("Initializing MongoDB connection...")
     client = AsyncIOMotorClient(settings.mongodb_url)
     await client.drop_database(settings.mongodb_database)
@@ -43,6 +46,14 @@ async def lifespan(app: FastAPI):
         Topic, Workspace
     ])
     logger.info("MongoDB connection established.")
+
+    syllabus_parser = SyllabusParser(settings.openai_chat_model, settings.openai_api_key)
+    mindmap_generator = MindmapGenerator(settings.openai_chat_model, settings.openai_api_key)
+    flashcard_generator = FlashcardGenerator(settings.openai_chat_model, settings.openai_api_key)
+
+    app.state.syllabus_parser = syllabus_parser
+    app.state.mindmap_generator = mindmap_generator
+    app.state.flashcard_generator = flashcard_generator
 
     logger.info("Setting up media directories...")
     image_directory = Path(settings.image_directory)
@@ -61,9 +72,10 @@ app = FastAPI(lifespan=lifespan)
 app.include_router(user_routes.router)
 app.include_router(post_routes.router)
 app.include_router(comment_routes.router)
-app.include_router(upload_routes.router)
+app.include_router(document_routes.router)
 app.include_router(quiz_routes.router)
 app.include_router(flashcard_routes.router)
+app.include_router(topic_routes.router)
 app.include_router(workspace_routes.router)
 
 

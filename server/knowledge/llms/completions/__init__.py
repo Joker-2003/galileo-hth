@@ -1,4 +1,4 @@
 from .base import LLM
-from .langchain_based import AzureOpenAI, LCCompletionMixin, OpenAI, Watson
+from .langchain_based import AzureOpenAI, LCCompletionMixin, OpenAI
 
-__all__ = ["LLM", "OpenAI", "AzureOpenAI", "LCCompletionMixin", "Watson"]
+__all__ = ["LLM", "OpenAI", "AzureOpenAI", "LCCompletionMixin"]

@@ -37,7 +37,7 @@ class SimpleBranchingPipeline(BaseComponent):
         for i in range(3):
             pipeline.add_branch(
                 GatedLinearPipeline(
-                    prompt=BasePromptComponent(template=f"what is {i} in Japanese ?"),
+                    prompt=BasePromptComponent(parse_template=f"what is {i} in Japanese ?"),
                     condition=RegexExtractor(pattern=f"{i}"),
                     llm=llm,
                     post_processor=identity,
@@ -114,7 +114,7 @@ class GatedBranchingPipeline(SimpleBranchingPipeline):
         for i in range(3):
             pipeline.add_branch(
                 GatedLinearPipeline(
-                    prompt=BasePromptComponent(template=f"what is {i} in Japanese ?"),
+                    prompt=BasePromptComponent(parse_template=f"what is {i} in Japanese ?"),
                     condition=RegexExtractor(pattern=f"{i}"),
                     llm=llm,
                     post_processor=identity,

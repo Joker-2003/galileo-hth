@@ -62,5 +62,5 @@ class WikipediaTool(BaseTool):
         if not self.doc_store:
             self.doc_store = Wiki()
         tool = self.doc_store
-        evidence = tool.search(query)
+        evidence = tool.search_web(query)
         return evidence

@@ -115,7 +115,7 @@ class ReactAgent(BaseAgent):
 
     def _compose_prompt(self, instruction) -> str:
         """
-        Compose the prompt from template, worker description, examples and instruction.
+        Compose the prompt from parse_template, worker description, examples and instruction.
         """
         agent_scratchpad = self._construct_scratchpad(self.intermediate_steps)
         tool_description = self._compose_plugin_description()

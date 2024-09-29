@@ -23,7 +23,7 @@ class Solver(BaseComponent):
 
     def _compose_prompt(self, instruction, plan_evidence, output_lang) -> str:
         """
-        Compose the prompt from template, plan&evidence, examples and instruction.
+        Compose the prompt from parse_template, plan&evidence, examples and instruction.
         """
         fewshot = self._compose_fewshot_prompt()
         if self.prompt_template is not None:

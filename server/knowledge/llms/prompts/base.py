@@ -12,9 +12,9 @@ class BasePromptComponent(BaseComponent):
     Base class for prompt components.
 
     Args:
-        template (PromptTemplate): The prompt template.
+        template (PromptTemplate): The prompt parse_template.
         **kwargs: Any additional keyword arguments that will be used to populate the
-            given template.
+            given parse_template.
     """
 
     class Config:
@@ -23,7 +23,7 @@ class BasePromptComponent(BaseComponent):
 
     template: str | PromptTemplate
 
-    @Param.auto(depends_on="template")
+    @Param.auto(depends_on="parse_template")
     def template__(self):
         return (
             self.template
@@ -43,7 +43,7 @@ class BasePromptComponent(BaseComponent):
             **kwargs (dict): A dictionary of keyword arguments.
 
         Raises:
-            ValueError: If any keys provided are not in the template.
+            ValueError: If any keys provided are not in the parse_template.
 
         Returns:
             None
@@ -52,9 +52,9 @@ class BasePromptComponent(BaseComponent):
 
     def __check_unset_placeholders(self):
         """
-        Check if all the placeholders in the template are set.
+        Check if all the placeholders in the parse_template are set.
 
-        This function checks if all the expected placeholders in the template are set as
+        This function checks if all the expected placeholders in the parse_template are set as
             attributes of the object. If any placeholders are missing, a `ValueError`
             is raised with the names of the missing keys.
 
@@ -82,7 +82,7 @@ class BasePromptComponent(BaseComponent):
         """
         type_error = []
         for k, v in kwargs.items():
-            if k.startswith("template"):
+            if k.startswith("parse_template"):
                 continue
             if not isinstance(v, (str, int, Document, Callable)):  # type: ignore
                 type_error.append((k, type(v)))
@@ -112,7 +112,7 @@ class BasePromptComponent(BaseComponent):
 
     def __prepare_value(self):
         """
-        Generate a dictionary of keyword arguments based on the template's placeholders
+        Generate a dictionary of keyword arguments based on the parse_template's placeholders
             and the current instance's attributes.
 
         Returns:
@@ -126,7 +126,7 @@ class BasePromptComponent(BaseComponent):
                 return str(value)
 
             raise ValueError(
-                f"Unsupported type {type(value)} for template value of key {key}"
+                f"Unsupported type {type(value)} for parse_template value of key {key}"
             )
 
         kwargs = {}
@@ -143,7 +143,7 @@ class BasePromptComponent(BaseComponent):
                 v = __prepare(k, v)
             else:
                 raise ValueError(
-                    f"Unsupported type {type(v)} for template value of key `{k}`"
+                    f"Unsupported type {type(v)} for parse_template value of key `{k}`"
                 )
             kwargs[k] = v
 
@@ -173,7 +173,7 @@ class BasePromptComponent(BaseComponent):
             **kwargs: The keyword arguments to pass to the function.
 
         Returns:
-            The result of calling the `populate` method of the `template` object
+            The result of calling the `populate` method of the `parse_template` object
             with the given keyword arguments.
         """
         self.__set(**kwargs)

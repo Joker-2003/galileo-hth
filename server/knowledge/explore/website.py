@@ -2,7 +2,7 @@ import os
 from pprint import pprint
 from typing import List
 
-import grequests
+import requests
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 from googleapiclient.discovery import build
@@ -52,14 +52,14 @@ class WebsiteService:
     SEARCH_API_SERVICE_NAME = 'customsearch'
     SEARCH_API_VERSION = 'v1'
 
-    def __init__(self):
-        self.api_key = os.environ["GOOGLE_API_KEY"]
-        self.cse_id = os.environ["GOOGLE_CSE_ID"]
+    def __init__(self, api_key: str, cse_id: str):
+        self.api_key = api_key
+        self.cse_id = cse_id
         self.service = build(self.SEARCH_API_SERVICE_NAME, self.SEARCH_API_VERSION, developerKey=self.api_key)
 
     @classmethod
     async def scrape(cls, url: str) -> str:
-        response = await grequests.get(url)
+        response = requests.get(url)
         if response.status_code != 200:
             raise Exception(f"Failed to load page: {url}")
 
@@ -77,7 +77,7 @@ class WebsiteService:
 
 if __name__ == '__main__':
     load_dotenv()
-    service = WebsiteService()
+    service = WebsiteService(os.environ['GOOGLE_API_KEY'], os.environ['GOOGLE_CSE_ID'])
     response = service.search('"god is a woman" "thank you next" "7 rings"', num=10)
     item = response.items[0]
     print(response)

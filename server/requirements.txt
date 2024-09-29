@@ -2,6 +2,7 @@ aiofiles
 beanie
 boto3
 fastapi
+grequests
 langchain-community
 langchain-openai
 llama-index-vector-stores-qdrant

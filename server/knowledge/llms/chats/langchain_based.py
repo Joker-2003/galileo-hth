@@ -228,65 +228,6 @@ class LCAzureChatOpenAI(LCChatMixin, ChatLLM):  # type: ignore
         return AzureChatOpenAI
 
 
-class LCWatsonChat(LCChatMixin, ChatLLM):
-    ibm_api_key: str = Param(
-        help="https://medium.com/@harangpeter/setting-up-ibm-watsonx-ai-for-api-based-text-inference-435ef6d1a6a3",
-        default=None,
-        required=True,
-    )
-    model_id: str = Param(
-        help="Model name to use",
-        default=None,
-        required=True,
-    )
-    project_id: str = Param(
-        help="Project ID (https://cloud.ibm.com/resource-library)",
-        default=None,
-        required=True,
-    )
-    params: dict = Param(
-        help="LLM parameters to pass to the model",
-        default=None,
-        required=False,
-    )
-
-    def __init__(
-            self,
-            ibm_api_key: str | "ModelTypes" | None = None,
-            model_id: str | None = None,
-            project_id: str | None = None,
-            params: dict | None = None,
-    ):
-        from ibm_watsonx_ai import Credentials, APIClient
-        from ibm_watsonx_ai.foundation_models.utils.enums import ModelTypes
-
-        if isinstance(model_id, str):
-            # Check if model is a valid IBM LLM model
-            model_id = ModelTypes(model_id).value
-        elif isinstance(model_id, ModelTypes):
-            model_id = model_id.value
-
-        params = params or {}
-
-        credentials = Credentials(
-            url="https://us-south.ml.cloud.ibm.com",
-            api_key=ibm_api_key
-        )
-        watsonx_client = APIClient(credentials)
-
-        super().__init__(
-            model_id=model_id,
-            project_id=project_id,
-            watsonx_client=watsonx_client,
-            params=params,
-        )
-
-    def _get_lc_class(self):
-        from langchain_ibm import WatsonxLLM
-
-        return WatsonxLLM
-
-
 class LCAnthropicChat(LCChatMixin, ChatLLM):  # type: ignore
     api_key: str = Param(
         help="API key (https://console.anthropic.com/settings/keys)", required=True

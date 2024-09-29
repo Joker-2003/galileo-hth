@@ -1,12 +1,12 @@
 import uuid
 from datetime import datetime
 
-import boto3
 from beanie import PydanticObjectId
 from botocore.exceptions import NoCredentialsError, PartialCredentialsError
 from fastapi import APIRouter
 from fastapi import UploadFile, File, HTTPException, Depends
-from starlette.responses import StreamingResponse, Response
+from starlette.requests import Request
+from starlette.responses import StreamingResponse
 
 from server.config import Settings, get_settings
 from server.db import User, DocumentStore, DocumentStoreResponse
@@ -15,7 +15,7 @@ from server.utils.pdf import load_pdf_text
 router = APIRouter(prefix="/document", tags=["document"])
 
 
-@router.post("/{user_id}", response_model=DocumentStoreResponse)
+@router.post("/upload/{user_id}", response_model=DocumentStoreResponse)
 async def upload_file(
         user_id: PydanticObjectId,
         file: UploadFile = File(...),
@@ -71,8 +71,8 @@ async def get_document_by_key(key: str, settings: Settings = Depends(get_setting
     if not document:
         raise HTTPException(status_code=404, detail="Document not found")
 
+    s3_client = settings.get_s3_client()
     try:
-        s3_client = settings.get_s3_client()
         s3_response = s3_client.get_object(Bucket=settings.s3_bucket_name, Key=key)
         return StreamingResponse(content=s3_response["Body"].iter_chunks())
     except NoCredentialsError:

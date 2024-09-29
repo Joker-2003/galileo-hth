@@ -26,7 +26,7 @@ class BaseAgent(BaseComponent):
         )
     )
     prompt_template: Optional[Union[PromptTemplate, dict[str, PromptTemplate]]] = Param(
-        help="A prompt template or a dict to supply different prompt to the agent"
+        help="A prompt parse_template or a dict to supply different prompt to the agent"
     )
     plugins: list[BaseTool] = Param(
         default_callback=lambda _: [],

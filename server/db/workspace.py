@@ -17,7 +17,8 @@ class WorkspaceInsertForm(BaseModel):
 class Workspace(Document):
     user_id: Link[User]
     title: str
-
+    mindmap_title: Optional[str] = None
+    mindmap_content: Optional[str] = None
     created_at: datetime = datetime.now()
     updated_at: datetime = datetime.now()
 

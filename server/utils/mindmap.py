@@ -69,6 +69,6 @@ class MindmapGenerator:
         self.llm = ChatOpenAI(model_name=model, api_key=api_key, )
         self.chain = self.prompt | self.llm | self.parser
 
-    def parse(self, content: str) -> Mindmap:
+    def generate(self, content: str) -> Mindmap:
         query = self.template.format(content=content)
         return self.chain.invoke({"query": query})

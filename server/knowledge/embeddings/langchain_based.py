@@ -94,67 +94,6 @@ class LCEmbeddingMixin:
         raise ValueError(f"Invalid param {path}")
 
 
-class LCWatsonEmbeddings(LCEmbeddingMixin, BaseEmbeddings):
-    """Wrapper around Langchain's Watson embedding, focusing on key parameters"""
-
-    ibm_api_key: str = Param(
-        help="https://medium.com/@harangpeter/setting-up-ibm-watsonx-ai-for-api-based-text-inference-435ef6d1a6a3",
-        default=None,
-        required=True,
-    )
-    model_id: str = Param(
-        help="Model name to use (https://dataplatform.cloud.ibm.com/docs/content/wsj/analyze-data/fm-models-embed.html)",
-        default=None,
-        required=True,
-    )
-    project_id: str = Param(
-        help="Project ID (https://cloud.ibm.com/resource-library)",
-        default=None,
-        required=True,
-    )
-    params: dict = Param(
-        help="Embedding parameters to pass to the model",
-        default=None,
-        required=False,
-    )
-
-    def __init__(
-            self,
-            model_id: str | "EmbeddingTypes" = "ibm/slate-125m-english-rtrvr",
-            project_id: Optional[str] = None,
-            ibm_api_key: Optional[str] = None,
-            params: Optional[dict] = None,
-    ):
-        from ibm_watsonx_ai import Credentials, APIClient
-        from ibm_watsonx_ai.foundation_models.utils.enums import EmbeddingTypes
-
-        if isinstance(model_id, str):
-            # Check if model is a valid IBM embedding model
-            model_id = EmbeddingTypes(model_id).value
-        else:
-            model_id = model_id.value
-
-        params = params or {}
-
-        credentials = Credentials(
-            url="https://us-south.ml.cloud.ibm.com",
-            api_key=ibm_api_key
-        )
-        watsonx_client = APIClient(credentials)
-
-        super().__init__(
-            model_id=model_id,
-            project_id=project_id,
-            watsonx_client=watsonx_client,
-            params=params,
-        )
-
-    def _get_lc_class(self):
-        from langchain_ibm import WatsonxEmbeddings
-
-        return WatsonxEmbeddings
-
-
 class LCOpenAIEmbeddings(LCEmbeddingMixin, BaseEmbeddings):
     """Wrapper around Langchain's OpenAI embedding, focusing on key parameters"""
 

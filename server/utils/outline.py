@@ -33,6 +33,6 @@ class OutlineGenerator:
         self.llm = ChatOpenAI(model_name=model, api_key=api_key, )
         self.chain = self.prompt | self.llm | self.parser
 
-    def parse(self, content: str) -> List[Outline]:
+    def generate(self, content: str) -> List[Outline]:
         query = self.template.format(content=content)
         return self.chain.invoke({"query": query})

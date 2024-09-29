@@ -35,7 +35,7 @@ class Thought(BaseComponent):
 
     Basically, when a thought is run, it will:
 
-    1. Populate the prompt template with the input `**kwargs`.
+    1. Populate the prompt parse_template with the input `**kwargs`.
     2. Run the LLM model with the populated prompt.
     3. Post-process the LLM output with the post-processor.
 
@@ -68,7 +68,7 @@ class Thought(BaseComponent):
 
     prompt: str = Param(
         help=(
-            "The prompt template string. This prompt template has Python-like variable"
+            "The prompt parse_template string. This prompt parse_template has Python-like variable"
             " placeholders, that then will be substituted with real values when this"
             " component is executed"
         )

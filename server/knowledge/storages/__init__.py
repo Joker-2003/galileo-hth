@@ -1,5 +1,5 @@
 from .docstores import (
-    MongoDBDocumentStore
+    BaseDocumentStore, InMemoryDocumentStore
 )
 from .vectorstores import (
     BaseVectorStore,
@@ -10,7 +10,8 @@ from .vectorstores import (
 
 __all__ = [
     # Document stores
-    "MongoDBDocumentStore",
+    "BaseDocumentStore",
+    "InMemoryDocumentStore"
     # Vector stores
     "BaseVectorStore",
     "InMemoryVectorStore",

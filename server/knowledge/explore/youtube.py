@@ -167,7 +167,7 @@ class YouTubeService:
         return self._video_categories
 
     def search(self, query, max_results=10):
-        search_response = self.service.search().list(
+        search_response = self.service.search_web().list(
             q=query,
             part='snippet',
             maxResults=max_results
@@ -180,7 +180,7 @@ class YouTubeService:
         return ' '.join([line['text'] for line in transcript])
 
     def search_videos(self, query: str, max_results: int = 10):
-        response = self.service.search().list(
+        response = self.service.search_web().list(
             q=query,
             part='snippet',
             maxResults=max_results

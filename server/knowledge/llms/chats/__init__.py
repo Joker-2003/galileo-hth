@@ -4,7 +4,6 @@ from .langchain_based import (
     LCAnthropicChat,
     LCAzureChatOpenAI,
     LCChatMixin,
-    LCWatsonChat,
     LCChatOpenAI,
     LCGeminiChat,
 )
@@ -18,7 +17,6 @@ __all__ = [
     "ChatOpenAI",
     "LCAnthropicChat",
     "LCGeminiChat",
-    "LCWatsonChat",
     "LCChatOpenAI",
     "LCAzureChatOpenAI",
     "LCChatMixin",
