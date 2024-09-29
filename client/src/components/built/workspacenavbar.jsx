@@ -32,7 +32,12 @@ const WorkspaceNavbar = () => {
   const toggleProfileDropdown = () => setIsProfileDropdownOpen(!isProfileDropdownOpen);
 
   const handleWorkspaceSwitch = (workspace) => {
-    setSelectedWorkspace(workspace);
+    console.log("Selected workspace before change:", selectedWorkspace.workspaceName); // Debugging log
+
+    setSelectedWorkspace(workspace); // Correctly update the selected workspace
+
+    console.log("Selected workspace after change:", workspace.workspaceName); // Debugging log
+
     setIsWorkspaceDropdownOpen(false); // Close dropdown after selecting
     router.push(`/dashboard/${workspace.workspaceId}`); // Navigate to the selected workspace
   };
@@ -52,7 +57,7 @@ const WorkspaceNavbar = () => {
                 className="flex items-center space-x-2 focus:outline-none"
                 onClick={toggleWorkspaceDropdown}
               >
-                <span>{selectedWorkspace.workspaceName}</span>
+                <span>{selectedWorkspace.workspaceName}</span> {/* Display the selected workspace name */}
                 <ChevronDown className="w-4 h-4 text-black dark:text-white" />
               </button>
 
