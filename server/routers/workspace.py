@@ -23,7 +23,7 @@ async def get_workspaces(user_id: PydanticObjectId):
     return [WorkspaceResponse.from_workspace(workspace) for workspace in workspaces]
 
 
-@router.get("/workspace/{workspace_id}", response_model=WorkspaceResponse)
+@router.get("/id/{workspace_id}", response_model=WorkspaceResponse)
 async def get_workspace(workspace_id: PydanticObjectId):
     workspace = await Workspace.get(workspace_id)
     if not workspace:
