@@ -52,8 +52,7 @@ def test_user_results():
     assert user['name'] == 'Thomas Lin'
     update_user(user_id, 'Tom')
     user = get_user_by_id(user_id)
-    assert user['first_name'] == 'Tom'
-    assert user['last_name'] == 'Lin'
+    assert user['name'] == 'Tom'
     delete_user(user_id)
     user = get_user_by_id(user_id)
     assert user['detail'] == 'User not found by user_id'

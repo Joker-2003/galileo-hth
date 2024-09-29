@@ -13,16 +13,10 @@ router = APIRouter(prefix="/user", tags=["user"], )
 async def create_user(user_input: UserInsertForm):
     # Check if user already exists
     user = await User.find_one(User.email == user_input.email)
-    if user:
-
-        raise HTTPException(status_code=400, detail="User already exists")
-    else:
+    if not user:
         user = User(
             email=user_input.email,
-            password=user_input.password,
             name=user_input.name,
-            occupation=user_input.occupation,
-            education=user_input.education
         )
         await User.insert_one(user)
 

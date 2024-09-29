@@ -12,8 +12,7 @@ def create_user_if_not_exists(email: str = "test1@gmail.com"):
         payload = json.dumps({
             "email": email,
             "password": "password",
-            "first_name": "Thomas",
-            "last_name": "Lin"
+            "name": "Thomas Lin"
         })
         headers = {'Content-Type': 'application/json'}
 

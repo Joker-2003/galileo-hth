@@ -149,18 +149,19 @@ async def init_workspace(
     })
 
 
-@router.post("/share")
-async def share_workspace(share_form: WorkspaceShareInsertForm):
-    old_workspace = await Workspace.get(share_form.workspace_id)
-    if not old_workspace:
-        raise HTTPException(status_code=404, detail="Workspace not found")
-
-    new_workspace_form = WorkspaceInsertForm(
-        user_id=share_form.user_id,
-        title=old_workspace.title
-    )
-    new_workspace = Workspace.from_form(new_workspace_form)
-    await new_workspace.insert()
+@router.post("/{workspace_id}/{user_id}")
+async def share_workspace(workspace_id:str, user_id:str):
+    print(workspace_id, user_id)
+    # old_workspace = await Workspace.get(share_form.workspace_id)
+    # if not old_workspace:
+    #     raise HTTPException(status_code=404, detail="Workspace not found")
+    #
+    # new_workspace_form = WorkspaceInsertForm(
+    #     user_id=share_form.user_id,
+    #     title=old_workspace.title
+    # )
+    # new_workspace = Workspace.from_form(new_workspace_form)
+    # await new_workspace.insert()
 
     # old_topics = await Topic.find_many({'workspace_id': share_form.workspace_id}).to_list()
     # new_topics = []
