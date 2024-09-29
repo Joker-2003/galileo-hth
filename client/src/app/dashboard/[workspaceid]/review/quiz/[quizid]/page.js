@@ -131,6 +131,7 @@ export default function WorkspacePage() {
       ...selectedAnswers,
       [questionId]: optionId,
     });
+    console.log(selectedAnswers);
     setErrorMessage(""); // Clear error message on change
   };
 
@@ -155,6 +156,23 @@ export default function WorkspacePage() {
     ).length;
     setScore(correctAnswersCount);
   };
+
+  // const handleQuizSubmission = (quizId, answers) => {
+  //   const quizAttempt = {
+  //     quiz_id: quizId,
+  //     workspace_id: workspaceid,
+  //     answers: answers.map(answer => ({
+  //       question_id: answer.questionId,
+  //       answer: answer.answer,
+  //     })),
+  //   };
+
+  //   // Store or send the JSON object to your backend or state management
+  //   setQuizAttempts(prevAttempts => [...prevAttempts, quizAttempt]);
+
+  //   // Log the JSON object to the console
+  //   console.log(JSON.stringify(quizAttempt, null, 2));
+  // };
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -345,32 +363,32 @@ export default function WorkspacePage() {
           {/* Chart for Previous Attempts */}
           <div className="mt-8">
             <h2 className="text-xl font-semibold mb-4">Your History</h2>
-       
-              {/* Scatter Plot */}
-              <Line data={chartData}
-                options={{
-                  scales: {
-                    x: {
-                      type: 'time', // Use time scale for x-axis
-                      time: {
-                        unit: 'day', // You can adjust the unit to your needs
-                      },
-                      title: {
-                        display: true,
-                        text: 'Timestamp',
-                      },
+
+            {/* Scatter Plot */}
+            <Line data={chartData}
+              options={{
+                scales: {
+                  x: {
+                    type: 'time', // Use time scale for x-axis
+                    time: {
+                      unit: 'day', // You can adjust the unit to your needs
                     },
-                    y: {
-                      beginAtZero: true,
-                      max: 3,
-                      title: {
-                        display: true,
-                        text: 'Score',
-                      },
+                    title: {
+                      display: true,
+                      text: 'Timestamp',
                     },
                   },
-                }} />
-    
+                  y: {
+                    beginAtZero: true,
+                    max: 3,
+                    title: {
+                      display: true,
+                      text: 'Score',
+                    },
+                  },
+                },
+              }} />
+
           </div>
 
           <div className="mt-8">
