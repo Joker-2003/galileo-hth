@@ -41,12 +41,12 @@ export default function TypewriterEffectDemo() {
           Login
         </button>
         </Link>
-        <Link href="/signup">
+        {/* <Link href="/signup">
         <button
           className="w-40 h-10 rounded-xl bg-white text-black border border-black  text-sm">
           Register
         </button>
-        </Link>
+        </Link> */}
       </div>
     </div>
     </ThemeProvider>
