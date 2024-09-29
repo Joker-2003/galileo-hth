@@ -49,7 +49,7 @@ export default function WorkspacePage() {
       buttons: [
         { link: `/dashboard/${workspaceid}/review/flashcards/123`, value: "Learn" },
         { link: `/dashboard/${workspaceid}/review/flashcards/123/edit`, value: "Edit" },
-        { link: `/dashboard/${workspaceid}/review/flashcards/123/test`, value: "Test" },
+
       
       ]
     },
@@ -63,7 +63,7 @@ export default function WorkspacePage() {
       buttons: [
         { link:`/dashboard/${workspaceid}/review/flashcards/456`, value: "Learn" },
         { link:`/dashboard/${workspaceid}/review/flashcards/456/edit`, value: "Edit" },
-        { link:`/dashboard/${workspaceid}/review/flashcards/456/test`, value: "Test" }
+
       ]
     },
     {
@@ -75,7 +75,7 @@ export default function WorkspacePage() {
       mannual: false,
       buttons: [
         { link: `/dashboard/${workspaceid}/review/flashcards/789`, value: "Learn" },
-        { link: `/dashboard/${workspaceid}/review/flashcards/789/test`, value: "Test" }
+
       ]
     },
     {
@@ -87,7 +87,7 @@ export default function WorkspacePage() {
       mannual: false,
       buttons: [
         { link : `/dashboard/${workspaceid}/review/flashcards/101`, value: "Learn" },
-        { link : `/dashboard/${workspaceid}/review/flashcards/101/test`, value: "Test" }
+       
       ]
     },
   ];
