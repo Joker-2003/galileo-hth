@@ -34,7 +34,7 @@ export function CanvasRevealEffectDemo() {
   </>);
 }
 
-const FlashCard = ({
+export const FlashCard = ({
   title,
   icon,
   children

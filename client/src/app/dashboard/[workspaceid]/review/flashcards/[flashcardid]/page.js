@@ -3,29 +3,9 @@ import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import WorkspaceNavbar from "@/components/built/workspacenavbar";
 import { ThemeProvider } from "@/components/context/themecontext";
-import { FlashcardArray } from "react-quizlet-flashcard";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  TimeScale,
-  LineElement,
-  PointElement,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-import 'chartjs-adapter-date-fns'; // Import the date adapter
+import { CanvasRevealEffect } from "@/components/ui/canvas-reveal-effect";
+import { FlashCard } from "@/components/built/flashcard";
 
-// Register the necessary components
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  TimeScale,
-  LineElement,
-  PointElement,
-  Tooltip,
-  Legend
-);
 
 export default function WorkspacePage() {
   const router = useRouter();
@@ -119,8 +99,30 @@ export default function WorkspacePage() {
             </button>
           </div>
 
-     
-         
+          {/* Flashcard */}
+          <div className="max-w-5xl mx-auto px-8">
+            <div className="flex flex-wrap">
+              {
+                flashcards.map((flashcard, id) => (
+                  <FlashCard title={flashcard.backHTML} icon={flashcard.frontHTML}>
+                    <CanvasRevealEffect
+                      animationSpeed={3}
+                      containerClassName="bg-slate dark:bg-black"
+                      colors={[
+                        [236, 72, 153],
+                        [232, 121, 249],
+                      ]}
+                      dotSize={1} />
+                  </FlashCard>
+
+                ))
+              }
+            </div>
+          </div>
+          {/* <Card title="Sheetal is Nisha" icon={<AceternityIcon />}>
+        <CanvasRevealEffect animationSpeed={5.1} containerClassName="bg-emerald-900" />
+           </Card> */}
+
         </div>
       </div>
     </ThemeProvider>
