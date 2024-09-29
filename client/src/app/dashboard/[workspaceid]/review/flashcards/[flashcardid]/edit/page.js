@@ -76,6 +76,7 @@ export default function WorkspacePage() {
         front:newFlashcard.front,
         back:newFlashcard.back,
 		groupid: flashcardid,
+		workspaceid: workspaceid,
       };
 
   
