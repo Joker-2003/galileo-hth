@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { HoverBorderGradient } from "../ui/hover-border-gradient";
 import { TextGenerateEffect } from "../ui/text-generate-effect";
 
@@ -8,7 +9,7 @@ export function DashHeroNew() {
   return (
     <div className="h-[50vh] flex flex-col items-center justify-center mx-20 px-24 py-4">
       <TextGenerateEffect words={words} className="text-center w-full" />
-      
+      <Link href="/dashboard/create">
       <HoverBorderGradient
         containerClassName="rounded-full mt-4" // Add margin-top for spacing
         as="button"
@@ -16,6 +17,7 @@ export function DashHeroNew() {
       >
         <span>New Workspace</span>
       </HoverBorderGradient>
+      </Link>
     </div>
   );
 }

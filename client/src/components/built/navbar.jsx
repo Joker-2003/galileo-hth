@@ -21,13 +21,14 @@ const SexyNavbar = () => {
             Galileo
           </Link>
           <div className="hidden md:flex items-center space-x-8">
-            <HoverBorderGradient
+            <Link href={"/dashboard/create"} ><HoverBorderGradient
               containerClassName="rounded-full"
               as="button"
               className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
             >
               <span>New Workspace</span>
             </HoverBorderGradient>
+            </Link>
             
             <ThemeToggle />
 
@@ -54,11 +55,11 @@ const SexyNavbar = () => {
                         Profile
                       </Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link href="/settings" className="block px-4 py-2 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-neutral-800">
                         Settings
                       </Link>
-                    </li>
+                    </li> */}
                     <li>
                       <Link href="/logout" className="block px-4 py-2 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-neutral-800">
                         Logout
