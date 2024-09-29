@@ -47,8 +47,8 @@ export default function WorkspacePage() {
       link: `/dashboard/${workspaceid}/review/flashcards/123`,
       mannual: true,
       buttons: [
-        { link: "/some-link-1", value: "Edit" },
-        { link: "/some-link-2", value: "Review" }
+        { link: `/dashboard/${workspaceid}/review/flashcards/123/edit`, value: "Edit" },
+        { link: `/dashboard/${workspaceid}/review/flashcards/123/review`, value: "Review" }
       ]
     },
     {
@@ -59,8 +59,8 @@ export default function WorkspacePage() {
       link: `/dashboard/${workspaceid}/review/flashcards/456`,
       mannual: true,
       buttons: [
-        { link: "/some-link-1", value: "Edit" },
-        { link: "/some-link-2", value: "Review" }
+        { link:`/dashboard/${workspaceid}/review/flashcards/456/edit`, value: "Edit" },
+        { link:`/dashboard/${workspaceid}/review/flashcards/456/review`, value: "Review" }
       ]
     },
     {
@@ -71,7 +71,7 @@ export default function WorkspacePage() {
       link: `/dashboard/${workspaceid}/review/flashcards/789`,
       mannual: false,
       buttons: [
-        { link: "/some-link-2", value: "Review" }
+        { link: `/dashboard/${workspaceid}/review/flashcards/789/review`, value: "Review" }
       ]
     },
     {
@@ -82,7 +82,7 @@ export default function WorkspacePage() {
       link: `/dashboard/${workspaceid}/review/flashcards/101`,
       mannual: false,
       buttons: [
-        { link: "/some-link-3", value: "Review" }
+        { link : `/dashboard/${workspaceid}/review/flashcards/101/review`, value: "Review" }
       ]
     },
   ];
