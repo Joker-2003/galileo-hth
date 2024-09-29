@@ -67,3 +67,21 @@
     @apply bg-background text-foreground;
   }
 }
+
+.perspective {
+	perspective: 1000px;
+  }
+  
+  .card {
+	position: relative;
+	transform-style: preserve-3d;
+  }
+  
+  .backface-hidden {
+	backface-visibility: hidden;
+  }
+  
+  .rotateY-180 {
+	transform: rotateY(180deg);
+  }
+  

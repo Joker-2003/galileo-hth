@@ -27,14 +27,7 @@ const WorkspaceNavbar = ({workspaceid}) => {
             Galileo
           </Link>
           <div className="hidden md:flex items-center space-x-8">
-            <HoverBorderGradient
-              containerClassName="rounded-full"
-              as="button"
-              className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
-              onClick={handleAddFlashcards} // Trigger navigation on click
-            >
-              <span>Add Flashcards</span>
-            </HoverBorderGradient>
+           
             
             <ThemeToggle />
 

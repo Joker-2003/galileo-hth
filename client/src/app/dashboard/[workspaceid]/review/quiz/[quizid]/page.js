@@ -166,7 +166,7 @@ export default function WorkspacePage() {
   };
 
   const goToQuizzes = () => {
-    router.push(`/dashboard/${workspaceid}/quizzes`);
+    router.push(`/dashboard/${workspaceid}/quizz`);
   };
 
   // Data for Bar Chart

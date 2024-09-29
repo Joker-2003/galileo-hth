@@ -2,6 +2,7 @@
 import { QuizCard } from '@/components/built/quizcard';
 import WorkspaceNavbar from '@/components/built/workspacenavbar';
 import { ThemeProvider } from '@/components/context/themecontext';
+import { HoverEffectButton } from '@/components/ui/card-hover-buttons';
 import { HoverEffect } from '@/components/ui/card-hover-effect';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
@@ -40,46 +41,53 @@ export default function WorkspacePage() {
   const flashcards = [
     {
       title: "FlashCard 1 - Introduction",
-      id : "123",
-      description:
-        "Pre built quizzes to help you test your knowledge on various topics.",
-      count : 10,
-     link: `/dashboard/${workspaceid}/review/flashcards/${123}`,
-    },
-    {
-      title: "FlashCard  2 - Advanced",
-      id : "456",
-      description:
-        "Quiz to help you memorize important concepts and terms.",
-        count : 10,
-      link: `/dashboard/${workspaceid}/review/flashcards/${456}`,
+      id: "123",
+      description: "Pre built quizzes to help you test your knowledge on various topics.",
+      count: 10,
+      link: `/dashboard/${workspaceid}/review/flashcards/123`,
+      mannual: true,
+      buttons: [
+        { link: "/some-link-1", value: "Edit" },
+        { link: "/some-link-2", value: "Review" }
+      ]
     },
     {
       title: "FlashCard 2 - Advanced",
-      id : "456",
-      description:
-        "Quiz to help you memorize important concepts and terms.",
-        count : 10,
-      link: `/dashboard/${workspaceid}/review/flashcards/${456}`,
+      id: "456",
+      description: `Quiz to help you memorize important concepts and terms.`,
+      count: 10,
+      link: `/dashboard/${workspaceid}/review/flashcards/456`,
+      mannual: true,
+      buttons: [
+        { link: "/some-link-1", value: "Edit" },
+        { link: "/some-link-2", value: "Review" }
+      ]
     },
     {
-      title: "FlashCard 2 - Advanced",
-      id : "456",
-      description:
-        "Quiz to help you memorize important concepts and terms.",
-        count : 10,
-      link: `/dashboard/${workspaceid}/review/flashcards/${456}`,
+      title: "FlashCard 3 - Advanced",
+      id: "789",
+      description: "AI-generated quiz to help you memorize important concepts and terms.",
+      count: 10,
+      link: `/dashboard/${workspaceid}/review/flashcards/789`,
+      mannual: false,
+      buttons: [
+        { link: "/some-link-2", value: "Review" }
+      ]
     },
     {
-      title: "FlashCard  2 - Advanced",
-      id : "456",
-      description:
-        "Quiz to help you memorize important concepts and terms.",
-        count : 10,
-      link: `/dashboard/${workspaceid}/review/flashcards/${456}`,
+      title: "FlashCard 4 - Advanced",
+      id: "101",
+      description: "AI-generated quiz to help you memorize important concepts and terms.",
+      count: 10,
+      link: `/dashboard/${workspaceid}/review/flashcards/101`,
+      mannual: false,
+      buttons: [
+        { link: "/some-link-3", value: "Review" }
+      ]
     },
   ];
 
+  
 
   const handleNavigation = (topic) => {
     setActiveSection(topic);
@@ -102,17 +110,17 @@ export default function WorkspacePage() {
     }
   }, [topicid]);
 
+  // Filter the flashcards
+  const mannualFlashcards = flashcards.filter(card => card.mannual === true);
+  const aiGeneratedFlashcards = flashcards.filter(card => card.mannual === false);
+
   return (
     <ThemeProvider>
       <WorkspaceNavbar workspaceid={workspaceid} />
       <div className="flex h-screen">
-
-       
-
-        {/* Right: Content */}
         <div className="w-screen py-[64px] overflow-y-auto">
           {/* Tabs */}
-          <div className="flex px-8 mb-8 sticky top-[-10px] z-10 bg-white dark:bg-neutral-900 p-2 shadow-md">
+          <div className="flex px-8 mb-8 sticky top-[-10px] z-10 bg-white dark:bg-neutral-900 p-2 shadow-md z-10">
             <button
               onClick={() => handleTabChange('overview')}
               className={`p-4 ${activeTab === 'overview' ? 'border-b-2 border-blue-500 font-semibold' : ''}`}
@@ -133,16 +141,23 @@ export default function WorkspacePage() {
             </button>
           </div>
 
-         {/* Flashcards: Three per Row */}
-         <div className="max-w-5xl mx-auto px-8">
+          {/* Flashcards Section: Three per Row */}
+          <div className="max-w-5xl mx-auto px-8">
+           {/* AI Generated Flashcards */}
+           <h2 className="text-2xl font-bold mt-8 mb-4">AI Generated Flashcards</h2>
             <div className="flex flex-wrap">
-            <HoverEffect items={flashcards} />
+              <HoverEffectButton items={aiGeneratedFlashcards} />
             </div>
-          </div>
+            {/* Manually Generated Flashcards */}
+            <h2 className="text-2xl font-bold mb-4">Manually Generated Flashcards</h2>
+            <div className="flex flex-wrap">
+              <HoverEffectButton items={mannualFlashcards} />
+            </div>
 
+           
+          </div>
         </div>
       </div>
     </ThemeProvider>
   );
 }
-
