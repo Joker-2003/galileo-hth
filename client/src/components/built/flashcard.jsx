@@ -61,14 +61,15 @@ export const FlashCard = ({
         )}
       </AnimatePresence>
       <div className="relative z-20">
-        <div
-          className="text-center group-hover/canvas-card:-translate-y-4 group-hover/canvas-card:opacity-0 transition duration-200 w-full  mx-auto flex items-center justify-center">
-          {icon}
-        </div>
-        <h2
-          className="dark:text-white text-xl opacity-0 group-hover/canvas-card:opacity-100 relative z-10 text-black mt-4  font-bold group-hover/canvas-card:text-white group-hover/canvas-card:-translate-y-2 transition duration-200">
-          {title}
-        </h2>
+	  <div className="flex flex-col items-center justify-center w-full">
+  <h2 className="text-center group-hover/canvas-card:-translate-y-4 group-hover/canvas-card:opacity-0 transition duration-200 w-full mx-auto text-xl">
+    {icon}
+  </h2>
+  <h2 className="dark:text-white text-xl opacity-0 group-hover/canvas-card:opacity-100 relative z-10 text-black mt-4 font-bold group-hover/canvas-card:text-white group-hover/canvas-card:-translate-y-2 transition duration-200 text-center">
+    {title}
+  </h2>
+</div>
+
       </div>
     </div>)
   );

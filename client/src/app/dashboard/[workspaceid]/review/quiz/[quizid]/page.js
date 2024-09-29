@@ -243,7 +243,7 @@ export default function WorkspacePage() {
         {/* Left: Quiz Content */}
         <div className="w-3/4 py-[64px] overflow-y-auto">
           {/* Tabs */}
-          <div className="flex px-8 mb-8 sticky top-[-10px] z-10 bg-white dark:bg-neutral-900 p-2 shadow-md">
+          <div className="flex px-8 mb-8 sticky top-[-10px] z-10 bg-white dark:bg-neutral-800 p-2 shadow-md">
             <button
               onClick={() => handleTabChange("overview")}
               className={`p-4 ${activeTab === "overview" ? "border-b-2 border-blue-500 font-semibold" : ""}`}
@@ -325,8 +325,8 @@ export default function WorkspacePage() {
         </div>
 
         {/* Right: Sidebar */}
-        <div className="w-1/4 py-[64px] px-8 bg-gray-100 dark:bg-neutral-800 overflow-y-auto">
-          <h2 className="text-xl font-semibold mb-4">Quiz Progress</h2>
+        <div className="w-1/4 py-[64px] px-8 bg-gray-100 dark:bg-neutral-900 overflow-y-auto">
+          <h2 className="text-xl font-semibold mb-4 my-5">Quiz Progress</h2>
           <ul className="list-disc ml-4">
             {questions.map((q, index) => (
               <li key={q.id} className={`mb-2 ${selectedAnswers[q.id] ? "text-green-600" : "text-gray-600"}`}>

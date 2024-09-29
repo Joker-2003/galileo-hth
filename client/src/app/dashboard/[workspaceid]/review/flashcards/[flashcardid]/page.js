@@ -14,6 +14,11 @@ export default function WorkspacePage() {
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
 
+  const flashGroup = {
+    id: "123",
+    title: "Inroduction to Capitals",
+    description: "Pre built quizzes to help you test your knowledge on various topics.",
+  }
   const flashcards = [
     {
       id: "123",
@@ -77,7 +82,7 @@ export default function WorkspacePage() {
         {/* Quiz Content */}
         <div className="w-screen py-[64px] overflow-y-auto">
           {/* Tabs */}
-          <div className="flex px-8 mb-8 sticky top-[-10px] z-10 bg-white dark:bg-neutral-900 p-2 shadow-md">
+          <div className="flex px-8 mb-8 sticky top-[-10px] z-10 bg-white dark:bg-neutral-800 p-2 shadow-md">
             <button
               onClick={() => handleTabChange("overview")}
               className={`p-4 ${activeTab === "overview" ? "border-b-2 border-blue-500 font-semibold" : ""}`}
@@ -99,6 +104,10 @@ export default function WorkspacePage() {
           </div>
 
           {/* Flashcard with Next/Prev Navigation */}
+          <h2 className="text-2xl font-bold text-black dark:text-white mt-8 mb-4 mx-auto text-center">
+  {flashGroup.title}
+</h2>
+
           <div className="max-w-xl mx-auto flex flex-col items-center space-y-4">
             <div className="relative w-full h-64">
               <div

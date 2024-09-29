@@ -78,7 +78,7 @@ export default function WorkspacePage() {
         {/* Right: Content */}
         <div className="w-screen py-[64px] overflow-y-auto">
           {/* Tabs */}
-          <div className="flex px-8 mb-8 sticky top-[-10px] z-10 bg-white dark:bg-neutral-900 p-2 shadow-md">
+          <div className="flex px-8 mb-8 sticky top-[-10px] z-10 bg-white dark:bg-neutral-800 p-2 shadow-md">
             <button
               onClick={() => handleTabChange('overview')}
               className={`p-4 ${activeTab === 'overview' ? 'border-b-2 border-blue-500 font-semibold' : ''}`}

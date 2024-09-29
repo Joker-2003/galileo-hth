@@ -62,14 +62,14 @@ export default function WorkspacePage() {
       <div className="flex h-screen">
 
         {/* Left: Table of Contents */}
-        <div className="w-1/4 p-4 bg-gray-100 dark:bg-neutral-900 sticky top-0 h-screen overflow-y-auto py-20">
-          <h2 className="text-xl font-semibold mb-4">Table of Contents</h2>
+        <div className="w-1/5 p-4 bg-gray-100 dark:bg-neutral-900 sticky top-0 h-screen overflow-y-auto py-20">
+          <h2 className="text-xl font-semibold mb-4 px-5" >Table of Contents</h2>
           <ul className="space-y-2">
             {topics.map((topic) => (
               <li key={topic.id}>
                 <button
                   onClick={() => handleNavigation(topic.id)}
-                  className={`w-full text-left p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-neutral-800 ${activeSection === topic.id ? 'bg-gray-300 dark:bg-neutral-700' : ''}`}
+                  className={`w-full text-left p-2 rounded-lg hover:bg-gray-200 px-5 dark:hover:bg-neutral-800 ${activeSection === topic.id ? 'bg-gray-300 dark:bg-neutral-700' : ''}`}
                 >
                   {topic.title}
                 </button>
@@ -79,9 +79,9 @@ export default function WorkspacePage() {
         </div>
 
         {/* Right: Content */}
-        <div className="w-3/4 py-[64px] overflow-y-auto">
+        <div className="w-4/5 py-[64px] overflow-y-auto">
           {/* Tabs */}
-          <div className="flex mb-8 sticky top-[-10px] z-10 bg-white dark:bg-neutral-900 p-2 shadow-md">
+          <div className="flex mb-8 sticky top-[-10px] z-10 bg-white dark:bg-neutral-800 p-2 shadow-md">
             <button
               onClick={() => handleTabChange('overview')}
               className={`p-4 ${activeTab === 'overview' ? 'border-b-2 border-blue-500 font-semibold' : ''}`}
@@ -110,7 +110,7 @@ export default function WorkspacePage() {
               ref={(el) => {
                 if (el) sectionRefs.current[topic.id] = el;
               }}
-              className="min-w-full min-h-screen flex flex-col p-8 mb-12"
+              className="min-w-full min-h-screen flex flex-col p-8 pt-36 mb-12"
             >
               <h2 className="text-2xl font-bold mb-4">{topic.title}</h2>
               {topic.body.map((item, index) => (
