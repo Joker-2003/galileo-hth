@@ -8,9 +8,15 @@ import { ThemeProvider } from "@/components/context/themecontext";
 import { checkLoggedIn } from "@/firebase";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+    
 
 export default function Dashboard() {
-
+  const router = useRouter();
+  if (!checkLoggedIn()) {
+    console.log("not logged in");
+     router.push('/logout');
+     return;
+   }
   return (
     <ThemeProvider>
       <div className="bg-white dark:bg-black min-h-screen"> {/* Set background color */}
